@@ -3,9 +3,9 @@ using System.Globalization;
 using System.IO;
 using System.Reflection.Metadata;
 using OsuDatabaseControl.IO.Readers;
-using Test.DataAccess;
-using Test.DataTypes.Osu;
-using Test.DTO;
+using OsuDatabaseControl.DataAccess;
+using OsuDatabaseControl.DataTypes.Osu;
+using OsuDatabaseControl.DTO;
 using static System.Formats.Asn1.AsnWriter;
 
 namespace MyApp // Note: actual namespace depends on the project name.

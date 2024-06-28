@@ -1,8 +1,8 @@
 ﻿using OsuDatabaseControl.IO.Readers;
-using Test.Enums;
-using Test.Interfaces;
+using OsuDatabaseControl.Enums;
+using OsuDatabaseControl.Interfaces;
 
-namespace Test.DataTypes.Osu
+namespace OsuDatabaseControl.DataTypes.Osu
 {
     public class Replay : IReplay, ICloneable
     {

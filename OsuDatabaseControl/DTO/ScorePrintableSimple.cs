@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Test.DataTypes.Osu;
-using Test.Enums;
-using Test.Interfaces;
+using OsuDatabaseControl.DataTypes.Osu;
+using OsuDatabaseControl.Enums;
+using OsuDatabaseControl.Interfaces;
 
-namespace Test.DTO
+namespace OsuDatabaseControl.DTO
 {
     public class ScorePrintableSimple : ICloneable
     {

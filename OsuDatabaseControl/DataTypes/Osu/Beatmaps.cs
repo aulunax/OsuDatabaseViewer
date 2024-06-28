@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Test.DataTypes.Osu
+namespace OsuDatabaseControl.DataTypes.Osu
 {
     public class Beatmaps
     {

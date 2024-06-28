@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Test.Enums
+namespace OsuDatabaseControl.Enums
 {
     [Flags]
     public enum UserPermissions

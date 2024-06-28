@@ -3,11 +3,13 @@ using OsuDatabaseView.MainWindow;
 using OsuDatabaseView.StartWindow;
 using System.Globalization;
 using System.Windows;
+using OsuDatabaseControl.Config;
 
 namespace OsuDatabaseView
 {
     public partial class App : System.Windows.Application
     {
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
@@ -19,6 +21,16 @@ namespace OsuDatabaseView
             Thread.CurrentThread.CurrentUICulture = customCulture;
             CultureInfo.DefaultThreadCurrentCulture = customCulture;
             CultureInfo.DefaultThreadCurrentUICulture = customCulture;
+
+            // Load configuration at startup
+            ConfigManager.Instance.Config = ConfigManager.Instance.Config;
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            base.OnExit(e);
+
+            ConfigManager.Instance.SaveConfig();
         }
 
     }

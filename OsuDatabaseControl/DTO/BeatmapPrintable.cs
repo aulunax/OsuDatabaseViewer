@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Test.DataTypes.Osu;
-using Test.Enums;
+using OsuDatabaseControl.DataTypes.Osu;
+using OsuDatabaseControl.Enums;
 
-namespace Test.DTO
+namespace OsuDatabaseControl.DTO
 {
     public class BeatmapPrintable : ICloneable
     {

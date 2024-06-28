@@ -13,7 +13,6 @@ namespace OsuDatabaseView.Utils.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            // Check if the value is a string and is not null or empty
             if (value is double doubleValue)
             {
                 return doubleValue.ToString("F2");

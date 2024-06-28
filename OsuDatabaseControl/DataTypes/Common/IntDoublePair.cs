@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Test.DataTypes.Common
+namespace OsuDatabaseControl.DataTypes.Common
 {
     public class IntDoublePair
     {

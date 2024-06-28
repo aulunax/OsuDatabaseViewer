@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Shapes;
+using OsuDatabaseControl.Config;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace OsuDatabaseView.StartWindow
@@ -28,6 +29,12 @@ namespace OsuDatabaseView.StartWindow
 
         private void Confirmation()
         {
+            ConfigManager.Instance.Config.OsuDirectory = SelectedPath;
+            MainWindow.MainWindow mainWindow = new MainWindow.MainWindow();
+            mainWindow.Show();
+
+            App.Current.MainWindow.Close();
+            App.Current.MainWindow = mainWindow;
         }
 
         public string SelectedPath
@@ -65,6 +72,7 @@ namespace OsuDatabaseView.StartWindow
 
         public StartWindowViewModel()
         {
+            SelectedPath = ConfigManager.Instance.Config.OsuDirectory;
             DetectOsuCommand = new RelayCommand(async () => await DetectOsuDirectoryAsync());
             OpenDirectoryCommand = new RelayCommand(() => SelectOsuPathDialog());
             ConfirmationCommand = new RelayCommand(Confirmation);

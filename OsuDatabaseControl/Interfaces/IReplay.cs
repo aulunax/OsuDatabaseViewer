@@ -1,7 +1,7 @@
 ﻿
-using Test.Enums;
+using OsuDatabaseControl.Enums;
 
-namespace Test.Interfaces
+namespace OsuDatabaseControl.Interfaces
 {
     public interface IReplay
     {

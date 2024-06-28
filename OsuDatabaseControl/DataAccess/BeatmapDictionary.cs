@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Test.DataTypes.Osu;
-using Test.DTO;
-using Test.Interfaces;
+using OsuDatabaseControl.DataTypes.Osu;
+using OsuDatabaseControl.DTO;
+using OsuDatabaseControl.Interfaces;
 
-namespace Test.DataAccess
+namespace OsuDatabaseControl.DataAccess
 {
     public class BeatmapDictionary
     {

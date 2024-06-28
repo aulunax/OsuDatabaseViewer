@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Test.DataTypes.Osu
+namespace OsuDatabaseControl.DataTypes.Osu
 {
     [Flags]
     public enum Mods

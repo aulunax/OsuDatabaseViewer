@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Test.DataTypes.Osu;
+using OsuDatabaseControl.DataTypes.Osu;
 using static System.Formats.Asn1.AsnWriter;
 
 namespace OsuDatabaseControl.IO.Readers

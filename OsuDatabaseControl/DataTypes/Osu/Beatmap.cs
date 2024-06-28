@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OsuDatabaseControl.IO.Readers;
-using Test.DataTypes.Common;
-using Test.Enums;
-using Test.Interfaces;
+using OsuDatabaseControl.DataTypes.Common;
+using OsuDatabaseControl.Enums;
+using OsuDatabaseControl.Interfaces;
 
-namespace Test.DataTypes.Osu
+namespace OsuDatabaseControl.DataTypes.Osu
 {
     public class Beatmap : IBeatmap, ICloneable
     {

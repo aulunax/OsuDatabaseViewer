@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Test.DataTypes.Common;
+using OsuDatabaseControl.DataTypes.Common;
 
 namespace OsuDatabaseControl.IO.Readers
 {

@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Globalization;
-using Test.DTO;
-using Test.DataTypes;
-using Test.DataTypes.Osu;
+using OsuDatabaseControl.DTO;
+using OsuDatabaseControl.DataTypes;
+using OsuDatabaseControl.DataTypes.Osu;
 
 
 namespace OsuDatabaseView.Utils.Converters

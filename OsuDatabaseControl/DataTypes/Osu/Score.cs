@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OsuDatabaseControl.IO.Readers;
 
-namespace Test.DataTypes.Osu
+namespace OsuDatabaseControl.DataTypes.Osu
 {
     public class Score : Replay
     {

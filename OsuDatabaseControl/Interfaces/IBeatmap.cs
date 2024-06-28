@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Test.DataTypes.Common;
-using Test.Enums;
+using OsuDatabaseControl.DataTypes.Common;
+using OsuDatabaseControl.Enums;
 
-namespace Test.Interfaces
+namespace OsuDatabaseControl.Interfaces
 {
     public interface IBeatmap
     {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Test.DataTypes.Osu;
+using OsuDatabaseControl.DataTypes.Osu;
 
 namespace OsuDatabaseControl.Performance.Reworks
 {

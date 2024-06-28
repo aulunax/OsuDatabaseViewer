@@ -18,10 +18,7 @@ namespace OsuDatabaseView.Utils.Converters
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
