@@ -1,0 +1,45 @@
+﻿<Window x:Class="OsuDatabaseView.StartWindow.StartWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OsuDatabaseView.StartWindow"
+        xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
+
+        mc:Ignorable="d"
+        Title="StartWindow" SizeToContent="WidthAndHeight" MinWidth="360" MinHeight="200" Height="Auto" Width="Auto" ResizeMode="NoResize">
+    <Window.DataContext>
+        <local:StartWindowViewModel/>
+    </Window.DataContext>
+    
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="LightGray" Offset="0.0" />
+            <GradientStop Color="White" Offset="1.0" />
+        </LinearGradientBrush>
+    </Window.Background>
+    <Window.Resources>
+        
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Window.Resources>
+    <Grid>
+        <StackPanel Margin="10">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Style="{StaticResource CommonTextBlockStyle}" Text="Select your osu! directory:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <Button x:Name="OpenDirectoryButton" Content="Open" IsEnabled="{Binding IsDetecting, Converter={StaticResource BooleanNegationConverter}}" Command="{Binding OpenDirectoryCommand}"/>
+                <Button x:Name="AutoDetectButton" Content="Auto Detect" IsEnabled="{Binding IsDetecting, Converter={StaticResource BooleanNegationConverter}}" Command="{Binding DetectOsuCommand}" />
+            </StackPanel>
+            <ProgressBar x:Name="AutoDetectProgressBar" Minimum="0" Maximum="100" Value="{Binding AutoDetectionProgress}" Visibility="{Binding IsDetecting, Converter={StaticResource BooleanToVisibilityConverter}}" Height="20" Margin="10" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+            <TextBlock Style="{StaticResource CommonTextBlockStyle}"  HorizontalAlignment="Left" TextWrapping="Wrap" >
+                <Run Text="Selected: " />
+                <Run Text="{Binding SelectedPath, Converter={StaticResource NullToNoneConverter}}" />
+            </TextBlock>
+            <TextBlock Style="{StaticResource CommonTextBlockStyle}"  HorizontalAlignment="Left" TextWrapping="Wrap" Visibility="{Binding HasErrorOccurred}">
+                <Run Text="{Binding ErrorMessage}" />
+            </TextBlock>
+            <Button x:Name="ConfirmationButton" Content="Continue" IsEnabled="{Binding SelectedPath, Converter={StaticResource StringToBooleanConverter}}" HorizontalAlignment="Center" Command="{Binding ConfirmationCommand}"/>
+
+        </StackPanel>
+
+    </Grid>
+</Window>

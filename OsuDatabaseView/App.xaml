@@ -1,0 +1,18 @@
+﻿<Application x:Class="OsuDatabaseView.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="MainWindow\MainWindow.xaml"
+             xmlns:local="clr-namespace:OsuDatabaseView.Utils.Converters">
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/CommonStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <local:BooleanNegationConverter x:Key="BooleanNegationConverter"/>
+            <local:NullToNoneConverter x:Key="NullToNoneConverter"/>
+            <local:StringToBooleanConverter x:Key="StringToBooleanConverter"/>
+        </ResourceDictionary>
+    </Application.Resources>
+    
+</Application>
