@@ -10,14 +10,12 @@ namespace OsuDatabaseControl.Config
     [Serializable]
     public class Config
     {
-        public string Username { get; set; }
         public string OsuDirectory { get; set; }
         public bool AutoStart { get; set; }
 
         public Config()
         {
             OsuDirectory = null;
-            Username = null;
             AutoStart = false;
         }
     }

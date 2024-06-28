@@ -30,6 +30,7 @@ namespace OsuDatabaseView.StartWindow
         private void Confirmation()
         {
             ConfigManager.Instance.Config.OsuDirectory = SelectedPath;
+            ConfigManager.Instance.SaveConfig();
             MainWindow.MainWindow mainWindow = new MainWindow.MainWindow();
             mainWindow.Show();
 

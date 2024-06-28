@@ -5,17 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OsuDatabaseView.MainWindow"
         xmlns:convert="clr-namespace:OsuDatabaseView.Utils.Converters"
+        xmlns:menu="clr-namespace:OsuDatabaseView.MainWindow.UserControls.Menu"
         mc:Ignorable="d"
         Title="Osu! Database Manager" Height="450" Width="1200">
 
     <Window.DataContext>
         <local:MainWindowViewModel/>
     </Window.DataContext>
-   
-    
-    <Window.Resources>
-        <!-- Style for DataGridCell to remove cell borders -->
 
+
+    <Window.Resources>
         <Style TargetType="DataGridCell">
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="Margin" Value="0" />
@@ -35,42 +34,49 @@
         <convert:BooleanToToolTipConverter x:Key="BooleanToToolTipConverter"/>
         
     </Window.Resources>
-    <Grid>
-        <DataGrid ItemsSource="{Binding Scores}" IsReadOnly="True" ColumnWidth="SizeToHeader" AutoGenerateColumns="False" GridLinesVisibility="None">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Mode" Binding="{Binding PlayMode}" />
-                <DataGridTextColumn Header="Artist" Binding="{Binding ArtistName}" MinWidth="100"/>
-                <DataGridTextColumn Header="Song Title" Binding="{Binding SongTitle}" MinWidth="100"/>
-                <DataGridTextColumn Header="Difficulty" Binding="{Binding DifficultyName}" MinWidth="100"/>
-                <DataGridTextColumn Header="Creator Name" Binding="{Binding CreatorName}" />
-                <DataGridTextColumn Header="Stars" Binding="{Binding StarRating, Converter={StaticResource LowPrecissionDoubleConverter}}" />
-                <DataGridTextColumn Header="Mods" Binding="{Binding ., Converter={StaticResource ModsToStringConverter}}" Width="Auto"/>
-                <DataGridTextColumn Header="300" Binding="{Binding C300}" />
-                <DataGridTextColumn Header="100" Binding="{Binding C100}" />
-                <DataGridTextColumn Header="50" Binding="{Binding C50}" />
-                <DataGridTextColumn Header="Miss" Binding="{Binding Miss}" />
-                <DataGridTextColumn Header="Total Score" Binding="{Binding TotalScore}" />
-                <DataGridTemplateColumn Header="Combo">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding MaxCombo}"
-                                        ToolTip="{Binding Perfect, Converter={StaticResource BooleanToToolTipConverter}}"
-                                        ToolTipService.InitialShowDelay="100" >
-                                <TextBlock.Style>
-                                    <Style TargetType="TextBlock">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Perfect}" Value="True">
-                                                <Setter Property="FontWeight" Value="Bold" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="Auto" />
-            </DataGrid.Columns>
-        </DataGrid>
-    </Grid>
+    <DockPanel>
+        <menu:MenuView DockPanel.Dock="Top"/>
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0" Background="#FFF0F0F0">
+            <Label Content="Search: " VerticalAlignment="Center"/>
+            <TextBox x:Name="SearchBox" Width="200" Height="20" Margin="5" 
+    HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        </StackPanel>
+        <Grid>
+            <DataGrid ItemsSource="{Binding Scores}" IsReadOnly="True" ColumnWidth="SizeToHeader" AutoGenerateColumns="False" HeadersVisibility="Column" GridLinesVisibility="None">
+                <DataGrid.Resources>
+                    <DataTemplate x:Key="ComboColumnTemplate">
+                        <TextBlock Text="{Binding MaxCombo}"
+                    ToolTip="{Binding Perfect, Converter={StaticResource BooleanToToolTipConverter}}"
+                    ToolTipService.InitialShowDelay="100" >
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Perfect}" Value="True">
+                                            <Setter Property="FontWeight" Value="Bold" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </DataTemplate>
+                </DataGrid.Resources>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Mode" Binding="{Binding PlayMode}" />
+                    <DataGridTextColumn Header="Artist" Binding="{Binding ArtistName}" MinWidth="100"/>
+                    <DataGridTextColumn Header="Song Title" Binding="{Binding SongTitle}" MinWidth="100"/>
+                    <DataGridTextColumn Header="Difficulty" Binding="{Binding DifficultyName}" MinWidth="100"/>
+                    <DataGridTextColumn Header="Creator Name" Binding="{Binding CreatorName}" />
+                    <DataGridTextColumn Header="Stars" Binding="{Binding StarRating, Converter={StaticResource LowPrecissionDoubleConverter}}" />
+                    <DataGridTextColumn Header="Mods" Binding="{Binding ., Converter={StaticResource ModsToStringConverter}}" SortMemberPath="Mods" Width="Auto"/>
+                    <DataGridTextColumn Header="300" Binding="{Binding C300}" />
+                    <DataGridTextColumn Header="100" Binding="{Binding C100}" />
+                    <DataGridTextColumn Header="50" Binding="{Binding C50}" />
+                    <DataGridTextColumn Header="Miss" Binding="{Binding Miss}" />
+                    <DataGridTextColumn Header="Total Score" Binding="{Binding TotalScore}" />
+                    <DataGridTemplateColumn Header="Combo" SortMemberPath="MaxCombo" CellTemplate="{StaticResource ComboColumnTemplate}"/>
+                    <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="Auto" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </DockPanel>
 </Window>

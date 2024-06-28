@@ -68,5 +68,10 @@ namespace OsuDatabaseControl.DataTypes.Osu
             }
             return modsString + " ";
         }
+
+        public static Mods MaskOnlyDifficultyChanging(this Mods mods)
+        {
+            return mods & (Mods.MapChanging | Mods.Fl) & (~Mods.Nc);
+        }
     }
 }

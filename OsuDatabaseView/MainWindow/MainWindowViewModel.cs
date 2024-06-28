@@ -46,11 +46,12 @@ namespace OsuDatabaseView.MainWindow
                 {
                     return;
                 }
+                OsuDBInfo osuDBInfo = OsuDBReader.ReadOsuDBInfo(Path.Combine(osuPath, FilePaths.OSU_OSUDB_FILENAME));
                 Scores scores = ScoresDBReader.ReadScores(Path.Combine(osuPath, FilePaths.OSU_SCOREDB_FILENAME));
                 Beatmaps beatmaps = OsuDBReader.ReadBeatmaps(Path.Combine(osuPath, FilePaths.OSU_OSUDB_FILENAME));
                 Scores = new ObservableCollection<ScoreAndBeatmapPrintable>();
                 BeatmapDictionary beatmapDictionary = new BeatmapDictionary(beatmaps);
-                foreach (Score sc in scores.GetScores())
+                foreach (Score sc in scores.GetScores().Where(sc => sc.PlayerName == osuDBInfo.PlayerName))
                 {
                     try
                     {

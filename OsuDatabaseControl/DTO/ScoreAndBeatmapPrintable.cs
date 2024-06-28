@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OsuDatabaseControl.DataAccess;
+using OsuDatabaseControl.DataTypes.Common;
 using OsuDatabaseControl.DataTypes.Osu;
 using OsuDatabaseControl.Enums;
 using OsuDatabaseControl.Interfaces;
@@ -12,6 +13,7 @@ namespace OsuDatabaseControl.DTO
 {
     public class ScoreAndBeatmapPrintable : ICloneable
     {
+        public string PlayerName { get; set; }
         public PlayMode PlayMode { get; set; }
         public Mods Mods { get; set; }
         public string SongTitle { get; set; }
@@ -32,25 +34,27 @@ namespace OsuDatabaseControl.DTO
         public ScoreAndBeatmapPrintable(Score score, BeatmapDictionary beatmapDict)
         {
             Beatmap beatmap = beatmapDict.GetBeatmap(score.MapHash);
+            PlayerName = score.PlayerName;
             PlayMode = beatmap.GameplayMode;
             Mods = (Mods)score.Mods;
             SongTitle = beatmap.SongTitle;
             ArtistName = beatmap.ArtistName;
             CreatorName = beatmap.CreatorName;
             DifficultyName = beatmap.Difficulty;
+            
             switch (beatmap.GameplayMode)
             {
                 case PlayMode.Osu:
-                    StarRating = beatmap.StarRatingStandard[0].DoubleValue;
+                    StarRating = findStarRating(beatmap.StarRatingStandard, Mods.MaskOnlyDifficultyChanging());
                     break;
                 case PlayMode.Taiko:
-                    StarRating = beatmap.StarRatingTaiko[0].DoubleValue;
+                    StarRating = findStarRating(beatmap.StarRatingTaiko, Mods.MaskOnlyDifficultyChanging());
                     break;
                 case PlayMode.CatchTheBeat:
-                    StarRating = beatmap.StarRatingCTB[0].DoubleValue;
+                    StarRating = findStarRating(beatmap.StarRatingCTB, Mods.MaskOnlyDifficultyChanging());
                     break;
                 case PlayMode.OsuMania:
-                    StarRating = beatmap.StarRatingMania[0].DoubleValue;
+                    StarRating = findStarRating(beatmap.StarRatingMania, Mods.MaskOnlyDifficultyChanging());
                     break;
                 default:
                     StarRating = 0.0;
@@ -66,6 +70,16 @@ namespace OsuDatabaseControl.DTO
             Date = score.Date;
         }
 
+        private double findStarRating(IntDoublePair[] starRating, Mods mods)
+        {
+            foreach (IntDoublePair rating in starRating)
+            {
+                if (rating.IntValue == (int)mods) { 
+                    return rating.DoubleValue;
+                }
+            }
+            return 0.0;
+        }
         public override string ToString()
         {
             return $"{Mods.ToAcronyms()}" +

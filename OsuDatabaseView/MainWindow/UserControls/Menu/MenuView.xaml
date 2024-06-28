@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="OsuDatabaseView.MainWindow.UserControls.Menu.MenuView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:OsuDatabaseView.MainWindow.UserControls.Menu"
+             mc:Ignorable="d">
+
+    <UserControl.DataContext>
+        <local:MenuViewModel/>
+    </UserControl.DataContext>
+    <Menu>
+        <MenuItem Header="_File">
+            <MenuItem Header="Exit" IsCheckable="False"/>
+        </MenuItem>
+
+        <MenuItem Header="_View">
+
+        </MenuItem>
+        <MenuItem Header="_Config">
+            <MenuItem Header="Auto Start" StaysOpenOnClick="True" IsChecked="{Binding AutoStartState}" Command="{Binding ChangeAutoStartStateCommand}"/>
+        </MenuItem>
+        <MenuItem Header="_About">
+
+        </MenuItem>
+    </Menu>
+</UserControl>

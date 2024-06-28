@@ -106,7 +106,7 @@ namespace OsuDatabaseControl.IO
             return;
         }
 
-        private bool IsOsuFolder(string directory)
+        public static bool IsOsuFolder(string directory)
         {
             string scoresDatabasePath = Path.Combine(directory, FilePaths.OSU_SCOREDB_FILENAME);
             string osuDatabasePath = Path.Combine(directory, FilePaths.OSU_OSUDB_FILENAME);

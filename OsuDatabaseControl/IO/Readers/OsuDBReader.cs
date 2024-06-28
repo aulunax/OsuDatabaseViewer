@@ -19,15 +19,12 @@ namespace OsuDatabaseControl.IO.Readers
                 using (FileStream stream = new FileStream(filename, FileMode.Open, FileAccess.Read))
                 {
                     OsuBinaryReader reader = new OsuBinaryReader(stream);
-                    int Version = reader.ReadInt32();
-                    int FolderCount = reader.ReadInt32();
-                    bool AccountUnlocked = reader.ReadBoolean();
-                    DateTime UnlockDate = reader.ReadDateTime();
-                    string PlayerName = reader.ReadString();
-                    int beatmapsCount = reader.ReadInt32();
-                    for (int i = 0; i < beatmapsCount; i++)
+                    OsuDBInfo osuInfo = new OsuDBInfo();
+                    OsuDBInfo.ReadOsuDBInfo(reader, osuInfo);
+
+                    for (int i = 0; i < osuInfo.BeatmapsCount; i++)
                     {
-                        beatmaps.AddBeatmap(Beatmap.ReadBeatmap(reader, null, Version));
+                        beatmaps.AddBeatmap(Beatmap.ReadBeatmap(reader, null, osuInfo.Version));
                     }
                     UserPermissions userPermissions = (UserPermissions)reader.ReadInt32();
                 }
@@ -37,6 +34,24 @@ namespace OsuDatabaseControl.IO.Readers
                 Debug.WriteLine($"Error while trying to read osu!.db file: {ex.Message}");
             }
             return beatmaps;
+        }
+
+        static public OsuDBInfo ReadOsuDBInfo(string filename)
+        {
+            OsuDBInfo osuInfo = new OsuDBInfo();
+            try
+            {
+                using (FileStream stream = new FileStream(filename, FileMode.Open, FileAccess.Read))
+                {
+                    OsuBinaryReader reader = new OsuBinaryReader(stream);
+                    OsuDBInfo.ReadOsuDBInfo(reader, osuInfo);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error while trying to read OsuDBInfo from osu!.db file: {ex.Message}");
+            }
+            return osuInfo;
         }
     }
 }

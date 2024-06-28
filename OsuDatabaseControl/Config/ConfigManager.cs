@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using OsuDatabaseControl.IO;
 
 namespace OsuDatabaseControl.Config
 {
@@ -36,7 +37,7 @@ namespace OsuDatabaseControl.Config
             LoadConfig();
         }
 
-        private void LoadConfig()
+        public void LoadConfig()
         {
             try
             {
@@ -50,6 +51,18 @@ namespace OsuDatabaseControl.Config
             {
                 _config = new Config();
             }
+
+
+            if (!IsValidOsuPath())
+            {
+                _config.OsuDirectory = null;
+                SaveConfig();
+            }
+        }
+
+        public bool IsValidOsuPath()
+        {
+            return DirectorySearch.IsOsuFolder(_config.OsuDirectory);
         }
 
         public void SaveConfig()

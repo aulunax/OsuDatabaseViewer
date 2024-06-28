@@ -24,6 +24,16 @@ namespace OsuDatabaseView
 
             // Load configuration at startup
             ConfigManager.Instance.Config = ConfigManager.Instance.Config;
+
+            if (ConfigManager.Instance.IsValidOsuPath() && ConfigManager.Instance.Config.AutoStart == true)
+            {
+                MainWindow = new MainWindow.MainWindow();
+            }
+            else
+            {
+                MainWindow = new StartWindow.StartWindow();
+            }
+            MainWindow.Show();
         }
 
         protected override void OnExit(ExitEventArgs e)
