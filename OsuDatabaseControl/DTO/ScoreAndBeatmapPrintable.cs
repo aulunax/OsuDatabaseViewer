@@ -35,7 +35,7 @@ namespace OsuDatabaseControl.DTO
         {
             Beatmap beatmap = beatmapDict.GetBeatmap(score.MapHash);
             PlayerName = score.PlayerName;
-            PlayMode = beatmap.GameplayMode;
+            PlayMode = score.PlayMode;
             Mods = (Mods)score.Mods;
             SongTitle = beatmap.SongTitle;
             ArtistName = beatmap.ArtistName;
