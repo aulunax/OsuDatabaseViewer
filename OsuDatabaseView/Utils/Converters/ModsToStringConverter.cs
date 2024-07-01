@@ -17,7 +17,7 @@ namespace OsuDatabaseView.Utils.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is ScoreAndBeatmapPrintable score)
+            if (value is FullScore score)
             {
                 return $"{score.Mods.ToAcronyms()}";
             }

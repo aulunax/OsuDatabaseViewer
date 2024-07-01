@@ -9,17 +9,37 @@ using OsuDatabaseControl.DataTypes.Osu;
 using OsuDatabaseControl.Enums;
 using OsuDatabaseControl.Interfaces;
 
-namespace OsuDatabaseControl.DTO
+namespace OsuDatabaseControl.DataTypes
 {
-    public class ScoreAndBeatmapPrintable : ICloneable
+    public class FullScore : ICloneable
     {
         public string PlayerName { get; set; }
         public PlayMode PlayMode { get; set; }
         public Mods Mods { get; set; }
-        public string SongTitle { get; set; }
         public string ArtistName { get; set; }
+        public string ArtistNameUnicode { get; set; }
+        public string SongTitle { get; set; }
+        public string SongTitleUnicode { get; set; }
         public string CreatorName { get; set; }
         public string DifficultyName { get; set; }
+        public string AudioFileName { get; set; }
+        public string MD5Hash { get; set; }
+        public string OsuFileName { get; set; }
+        public BeatmapRankedStatus RankedStatus { get; set; }
+        public short NumberOfHitCircles { get; set; }
+        public short NumberOfSliders { get; set; }
+        public short NumberOfSpinners { get; set; }
+        public float ApproachRate { get; set; } // TODO: Byte if the version is less than 20140609, Single otherwise.
+        public float CircleSize { get; set; }
+        public float HPDrain { get; set; }
+        public float OverallDifficulty { get; set; }
+        public double SliderVelocity { get; set; }
+        public int DrainTime { get; set; }
+        public int TotalTime { get; set; }
+        public string SongSource { get; set; }
+        public string SongTags { get; set; }
+        public short OnlineOffset { get; set; }
+        public long LastPlayedTime { get; set; }
         public double StarRating { get; set; }
         public short C300 { get; set; }
         public short C100 { get; set; }
@@ -31,16 +51,46 @@ namespace OsuDatabaseControl.DTO
         public DateTime Date { get; set; }
 
 
-        public ScoreAndBeatmapPrintable(Score score, BeatmapDictionary beatmapDict)
+        public FullScore(Score score, BeatmapDictionary beatmapDict)
         {
             Beatmap beatmap = beatmapDict.GetBeatmap(score.MapHash);
+            
             PlayerName = score.PlayerName;
             PlayMode = score.PlayMode;
             Mods = (Mods)score.Mods;
+            C300 = score.C300;
+            C100 = score.C100;
+            C50 = score.C50;
+            Miss = score.Miss;
+            TotalScore = score.TotalScore;
+            MaxCombo = score.MaxCombo;
+            Perfect = score.Perfect;
+            Date = score.Date;
+            
             SongTitle = beatmap.SongTitle;
             ArtistName = beatmap.ArtistName;
+            ArtistNameUnicode = beatmap.ArtistNameUnicode;
+            SongTitleUnicode = beatmap.SongTitleUnicode;
             CreatorName = beatmap.CreatorName;
             DifficultyName = beatmap.Difficulty;
+            AudioFileName = beatmap.AudioFileName;
+            MD5Hash = beatmap.MD5Hash;
+            OsuFileName = beatmap.OsuFileName;
+            RankedStatus = beatmap.RankedStatus;
+            NumberOfHitCircles = beatmap.NumberOfHitCircles;
+            NumberOfSliders = beatmap.NumberOfSliders;
+            NumberOfSpinners = beatmap.NumberOfSpinners;
+            ApproachRate = beatmap.ApproachRate;
+            CircleSize = beatmap.CircleSize;
+            HPDrain = beatmap.HPDrain;
+            OverallDifficulty = beatmap.OverallDifficulty;
+            SliderVelocity = beatmap.SliderVelocity;
+            DrainTime = beatmap.DrainTime;
+            TotalTime = beatmap.TotalTime;
+            SongSource = beatmap.SongSource;
+            SongTags = beatmap.SongTags;
+            OnlineOffset = beatmap.OnlineOffset;
+            LastPlayedTime = beatmap.LastPlayedTime;
             
             switch (beatmap.GameplayMode)
             {
@@ -60,14 +110,6 @@ namespace OsuDatabaseControl.DTO
                     StarRating = 0.0;
                     break;
             }
-            C300 = score.C300;
-            C100 = score.C100;
-            C50 = score.C50;
-            Miss = score.Miss;
-            TotalScore = score.TotalScore;
-            MaxCombo = score.MaxCombo;
-            Perfect = score.Perfect;
-            Date = score.Date;
         }
 
         private double findStarRating(IntDoublePair[] starRating, Mods mods)

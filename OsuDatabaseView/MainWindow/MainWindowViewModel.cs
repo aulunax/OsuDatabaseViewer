@@ -10,30 +10,53 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using CommunityToolkit.Mvvm.Input;
 using OsuDatabaseControl.Config;
 using OsuDatabaseControl.DataAccess;
+using OsuDatabaseControl.DataTypes;
 using OsuDatabaseControl.DataTypes.Osu;
 using OsuDatabaseControl.DTO;
+using OsuDatabaseControl.Filter;
 
 
 namespace OsuDatabaseView.MainWindow
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<ScoreAndBeatmapPrintable> _scores;
+        private ObservableCollection<FullScore> _filteredScores;
+        private FullScores _originalScores = new FullScores(); 
 
-        public ObservableCollection<ScoreAndBeatmapPrintable> Scores
+        public ObservableCollection<FullScore> FilteredScores
         {
-            get { return _scores; }
+            get { return _filteredScores; }
             set
             {
-                _scores = value;
-                OnPropertyChanged(nameof(Scores));
+                _filteredScores = value;
+                OnPropertyChanged(nameof(FilteredScores));
+            }
+        }
+        
+        private string _searchBoxQuery;
+
+        public string SearchBoxQuery
+        {
+            get => _searchBoxQuery;
+            set
+            {
+                if (_searchBoxQuery != value)
+                {
+                    _searchBoxQuery = value;
+                    OnPropertyChanged(nameof(SearchBoxQuery));
+                }
             }
         }
 
+        public ICommand UpdateFilteredScoresCommand { get; private set; }
+        
         public MainWindowViewModel()
         {
+            UpdateFilteredScoresCommand = new RelayCommand(UpdateFilteredScores);
             LoadData();
         }
 
@@ -41,30 +64,8 @@ namespace OsuDatabaseView.MainWindow
         {
             try
             {
-                string osuPath = ConfigManager.Instance.Config.OsuDirectory;
-                if (!Directory.Exists(osuPath))
-                {
-                    return;
-                }
-                OsuDBInfo osuDBInfo = OsuDBReader.ReadOsuDBInfo(Path.Combine(osuPath, FilePaths.OSU_OSUDB_FILENAME));
-                Scores scores = ScoresDBReader.ReadScores(Path.Combine(osuPath, FilePaths.OSU_SCOREDB_FILENAME));
-                Beatmaps beatmaps = OsuDBReader.ReadBeatmaps(Path.Combine(osuPath, FilePaths.OSU_OSUDB_FILENAME));
-                Scores = new ObservableCollection<ScoreAndBeatmapPrintable>();
-                BeatmapDictionary beatmapDictionary = new BeatmapDictionary(beatmaps);
-                foreach (Score sc in scores.GetScores().Where(sc => sc.PlayerName == osuDBInfo.PlayerName))
-                {
-                    try
-                    {
-                        Scores.Add(new ScoreAndBeatmapPrintable(sc, beatmapDictionary));
-                    }
-                    catch (KeyNotFoundException ex) {
-                        Debug.WriteLine($"Beatmap Hash is not present in the dictionary: {ex.Message}");
-                    }
-                    catch (Exception ex)
-                    {
-                        Debug.WriteLine($"Exception occurred in when adding a Score in MainWindowViewModel: {ex.Message}");
-                    }
-                }
+                _originalScores.LoadDataFromFile(ConfigManager.Instance.Config.OsuDirectory);
+                FilteredScores = new ObservableCollection<FullScore>(_originalScores.GetFullScores());
             }
             catch (Exception ex)
             {
@@ -72,6 +73,16 @@ namespace OsuDatabaseView.MainWindow
             }
         }
 
+        private void UpdateFilteredScores()
+        {
+            FilterCriteria criteria = new FilterCriteria();
+            FilterParser.ApplyQueries(criteria, SearchBoxQuery);
+
+            var filteredEnumerable = _originalScores.GetFullScores().AsEnumerable(); 
+            FilterCollection.Filter(ref filteredEnumerable, criteria);
+
+            FilteredScores = new ObservableCollection<FullScore>(filteredEnumerable);
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName)

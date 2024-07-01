@@ -4,11 +4,12 @@ using System.IO;
 using System.Reflection.Metadata;
 using OsuDatabaseControl.IO.Readers;
 using OsuDatabaseControl.DataAccess;
+using OsuDatabaseControl.DataTypes;
 using OsuDatabaseControl.DataTypes.Osu;
 using OsuDatabaseControl.DTO;
 using static System.Formats.Asn1.AsnWriter;
 
-namespace MyApp // Note: actual namespace depends on the project name.
+namespace OsuDatabaseControl // Note: actual namespace depends on the project name.
 {
     public class Program
     {
@@ -50,7 +51,7 @@ namespace MyApp // Note: actual namespace depends on the project name.
             {
                 foreach (Score score in sc)
                 {
-                    writer.Write(new ScoreAndBeatmapPrintable(score, beatmapDictionary) + "\n\n");
+                    writer.Write(new FullScore(score, beatmapDictionary) + "\n\n");
                 }
             }
             Console.WriteLine($"Content written to file ProperScores.txt");
