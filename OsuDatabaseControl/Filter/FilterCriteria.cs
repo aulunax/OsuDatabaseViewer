@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Text.RegularExpressions;
+using OsuDatabaseControl.DataTypes.Osu;
 using OsuDatabaseControl.Enums;
 using OsuDatabaseControl.Filter.DataTypes;
 
@@ -20,7 +21,7 @@ public class FilterCriteria
     public OptionalTextFilter Artist;
     public OptionalTextFilter Title;
     public OptionalTextFilter DifficultyName;
-    public OptionalTextFilter Mods;
+    public OptionalSet<Mods> Mods = new OptionalSet<Mods>();
     public OptionalSet<BeatmapRankedStatus> OnlineStatus = new OptionalSet<BeatmapRankedStatus>();
 
     public OptionalRange<double> UserStarDifficulty = new OptionalRange<double>

@@ -15,5 +15,7 @@ public enum Keyword
     od,
     hp,
     length,
-    lastplayed
+    lastplayed,
+    mod,
+    mods
 }

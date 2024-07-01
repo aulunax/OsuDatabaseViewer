@@ -23,6 +23,8 @@ public class FilterCollection
         collection = collection.Where(s => criteria.LastPlayed.IsInRange(s.Date));
         collection = collection.Where(s => criteria.StarDifficulty.IsInRange(s.StarRating));
         collection = collection.Where(s => criteria.OnlineStatus.IsInRange(s.RankedStatus));
+        collection = collection.Where(s => criteria.Mods.IsInRange(s.Mods));
+
 
 
     }

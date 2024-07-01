@@ -57,9 +57,14 @@ public class FilterParser
                 case "lastplayed":
                     return tryUpdateDateAgoRange(ref criteria.LastPlayed, op, value);
                 
-
+                
                 case "status":
                     return TryUpdateCriteriaSet(ref criteria.OnlineStatus, op, value);
+                
+                case "mods":
+                case "mod":
+                    return TryUpdateCriteriaSet(ref criteria.Mods, op, value);
+
 
                 case "creator":
                 case "author":
