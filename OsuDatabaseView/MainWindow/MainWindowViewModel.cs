@@ -33,7 +33,23 @@ namespace OsuDatabaseView.MainWindow
             set
             {
                 _filteredScores = value;
+                TotalNumberOfDisplayedScores = _filteredScores.Count().ToString();
                 OnPropertyChanged(nameof(FilteredScores));
+            }
+        }
+
+        private string _totalNumberOfDisplayedScores;
+
+        public string TotalNumberOfDisplayedScores
+        {
+            get => _totalNumberOfDisplayedScores;
+            set
+            {
+                if (_totalNumberOfDisplayedScores != value)
+                {
+                    _totalNumberOfDisplayedScores = value;
+                    OnPropertyChanged(nameof(TotalNumberOfDisplayedScores));
+                }
             }
         }
         
@@ -80,7 +96,7 @@ namespace OsuDatabaseView.MainWindow
 
             var filteredEnumerable = _originalScores.GetFullScores().AsEnumerable(); 
             FilterCollection.Filter(ref filteredEnumerable, criteria);
-
+            
             FilteredScores = new ObservableCollection<FullScore>(filteredEnumerable);
         }
 

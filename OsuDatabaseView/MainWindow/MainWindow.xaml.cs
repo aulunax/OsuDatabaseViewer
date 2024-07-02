@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using OsuDatabaseView.MainWindow.UserControls.Menu;
 
 namespace OsuDatabaseView.MainWindow
 {
@@ -19,6 +20,11 @@ namespace OsuDatabaseView.MainWindow
         public MainWindow()
         {
             InitializeComponent();
+            
+            var mainWindowViewModel = new MainWindowViewModel();
+            DataContext = mainWindowViewModel;
+            
+            menuView.SetMainWindowViewModel(mainWindowViewModel);
         }
     }
 }

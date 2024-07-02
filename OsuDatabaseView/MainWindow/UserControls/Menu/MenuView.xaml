@@ -12,6 +12,11 @@
     <Menu>
         <MenuItem Header="_File">
             <MenuItem Header="Exit" IsCheckable="False"/>
+            <MenuItem Header="Save As..." IsCheckable="False">
+                <MenuItem Header="JSON" IsCheckable="False" Command="{Binding SaveScoresAsJsonCommand}"/>
+                <!--<MenuItem Header="XML" IsCheckable="False" Command="{Binding SaveScoresAsXmlCommand}"/>-->
+                <MenuItem Header="Raw text" IsCheckable="False" Command="{Binding SaveScoresAsRawTextCommand}"/>
+            </MenuItem>
         </MenuItem>
 
         <MenuItem Header="_View">

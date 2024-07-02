@@ -36,7 +36,7 @@
         
     </Window.Resources>
     <DockPanel>
-        <menu:MenuView DockPanel.Dock="Top"/>
+        <menu:MenuView x:Name="menuView" DockPanel.Dock="Top"/>
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0" Background="#FFF0F0F0">
             <Label Content="Search: " VerticalAlignment="Center"/>
             <TextBox Text="{Binding SearchBoxQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -48,7 +48,11 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </TextBox>
-            
+            <TextBlock VerticalAlignment="Center">
+                <Run Text="Currently displaying"></Run>
+                <Run Text="{Binding TotalNumberOfDisplayedScores}"></Run>
+                <Run> scores</Run>
+            </TextBlock>
         </StackPanel>
         <Grid>
             <DataGrid ItemsSource="{Binding FilteredScores}" IsReadOnly="True" ColumnWidth="SizeToHeader" AutoGenerateColumns="False" HeadersVisibility="Column" GridLinesVisibility="None">

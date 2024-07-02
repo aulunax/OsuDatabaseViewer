@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OsuDatabaseControl.Common;
 using OsuDatabaseControl.DataAccess;
 using OsuDatabaseControl.DataTypes.Common;
 using OsuDatabaseControl.DataTypes.Osu;
 using OsuDatabaseControl.Enums;
 using OsuDatabaseControl.Interfaces;
+using OsuDatabaseControl.Utils;
 
 namespace OsuDatabaseControl.DataTypes
 {
@@ -80,10 +82,22 @@ namespace OsuDatabaseControl.DataTypes
             NumberOfHitCircles = beatmap.NumberOfHitCircles;
             NumberOfSliders = beatmap.NumberOfSliders;
             NumberOfSpinners = beatmap.NumberOfSpinners;
-            ApproachRate = beatmap.ApproachRate;
-            CircleSize = beatmap.CircleSize;
-            HPDrain = beatmap.HPDrain;
-            OverallDifficulty = beatmap.OverallDifficulty;
+            
+            if (Mods.HasFlag(Mods.Hr))
+            {
+                ApproachRate = float.Min(beatmap.ApproachRate * ModsConstants.HR_AR_MULTIPILER, 10.0f);
+                CircleSize = float.Min(beatmap.CircleSize * ModsConstants.HR_CS_MULTIPILER, 10.0f);
+                HPDrain = float.Min(beatmap.HPDrain * ModsConstants.HR_HP_MULTIPILER, 10.0f);
+                OverallDifficulty = float.Min(beatmap.OverallDifficulty * ModsConstants.HR_OD_MULTIPILER, 10.0f);
+            }
+            else
+            {
+                ApproachRate = beatmap.ApproachRate;
+                CircleSize = beatmap.CircleSize;
+                HPDrain = beatmap.HPDrain;
+                OverallDifficulty = beatmap.OverallDifficulty;
+            }
+
             SliderVelocity = beatmap.SliderVelocity;
             DrainTime = beatmap.DrainTime;
             TotalTime = beatmap.TotalTime;
@@ -91,6 +105,13 @@ namespace OsuDatabaseControl.DataTypes
             SongTags = beatmap.SongTags;
             OnlineOffset = beatmap.OnlineOffset;
             LastPlayedTime = beatmap.LastPlayedTime;
+            
+            if (Mods.HasFlag(Mods.Dt))
+            {
+                ApproachRate = DoubleTimeConversion.GetConvertedApproachRate(ApproachRate);
+                DrainTime = (int)(DrainTime / 1.5);
+                TotalTime = (int)(TotalTime / 1.5);
+            }
             
             switch (beatmap.GameplayMode)
             {

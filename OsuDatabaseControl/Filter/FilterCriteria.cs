@@ -1,4 +1,4 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
+﻿// Code in this file is a copy/modified copy of code originally copyrighted to Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Text.RegularExpressions;
@@ -10,6 +10,7 @@ namespace OsuDatabaseControl.Filter;
 
 public class FilterCriteria
 {
+    
     public OptionalRange<double> StarDifficulty;
     public OptionalRange<float> ApproachRate;
     public OptionalRange<float> DrainRate;
@@ -23,12 +24,16 @@ public class FilterCriteria
     public OptionalTextFilter DifficultyName;
     public OptionalSet<Mods> Mods = new OptionalSet<Mods>();
     public OptionalSet<BeatmapRankedStatus> OnlineStatus = new OptionalSet<BeatmapRankedStatus>();
-
-    public OptionalRange<double> UserStarDifficulty = new OptionalRange<double>
-    {
-        IsLowerInclusive = true,
-        IsUpperInclusive = true
-    };
+    
+    // Added filters for OsuDatabaseManager:
+    
+    public OptionalRange<int> Combo;
+    public OptionalRange<int> MissCount;
+    public OptionalRange<int> C300Count;
+    public OptionalRange<int> C100Count;
+    public OptionalRange<int> C50Count;
+    public OptionalRange<int> TotalScore;
+    
     
     public OptionalTextFilter[] SearchTerms = Array.Empty<OptionalTextFilter>();
     public bool AllowConvertedBeatmaps;

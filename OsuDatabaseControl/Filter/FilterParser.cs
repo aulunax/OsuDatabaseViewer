@@ -1,4 +1,4 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
+﻿// Code in this file is a copy/modified copy of code originally copyrighted to Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Globalization;
@@ -14,8 +14,11 @@ public class FilterParser
             @"\b(?<key>\w+)(?<op>(:|=|(>|<)(:|=)?))(?<value>("".*""[!]?)|(\S*))",
             RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-        public static void ApplyQueries(FilterCriteria criteria, string query)
+        public static void ApplyQueries(FilterCriteria criteria, string? query)
         {
+            if (query is null)
+                return;
+            
             foreach (Match match in query_syntax_regex.Matches(query))
             {
                 string key = match.Groups["key"].Value.ToLowerInvariant();
@@ -60,11 +63,6 @@ public class FilterParser
                 
                 case "status":
                     return TryUpdateCriteriaSet(ref criteria.OnlineStatus, op, value);
-                
-                case "mods":
-                case "mod":
-                    return TryUpdateCriteriaSet(ref criteria.Mods, op, value);
-
 
                 case "creator":
                 case "author":
@@ -80,6 +78,33 @@ public class FilterParser
                 case "diff":
                     return TryUpdateCriteriaText(ref criteria.DifficultyName, op, value);
 
+                // Added for OsuDatabaseManager
+                
+                case "mods":
+                case "mod":
+                    return TryUpdateCriteriaSet(ref criteria.Mods, op, value);
+                    
+                case "c300":
+                    return TryUpdateCriteriaRange(ref criteria.C300Count, op, value, tryParseInt);
+
+                case "c100":
+                    return TryUpdateCriteriaRange(ref criteria.C100Count, op, value, tryParseInt);
+
+                case "c50":
+                    return TryUpdateCriteriaRange(ref criteria.C50Count, op, value, tryParseInt);
+
+                case "miss":
+                    return TryUpdateCriteriaRange(ref criteria.MissCount, op, value, tryParseInt);
+
+                case "score":
+                case "totalscore":
+                    return TryUpdateCriteriaRange(ref criteria.TotalScore, op, value, tryParseInt);
+
+                case "combo":
+                case "maxcombo":
+                    return TryUpdateCriteriaRange(ref criteria.Combo, op, value, tryParseInt);
+
+                
                 default:
                     return false;
             }

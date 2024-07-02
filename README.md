@@ -1,9 +1,9 @@
 # OsuDatabaseManager
 
 ### TODO:
+- Finish od,ar,cs,hp conversion when dt,ht,hr mods are applied
 - Add general info below scores list
-- Filtering scores just like in osu! search
-- Maybe display bg and song info when it is selected
+- Display bg and song info when it is selected
 - Show pp value for each score
 - Choosable pp rework options
 - Some templates (like show scores only before x date, where pp values are the same as pp rework values on x date; personal pp record history)
@@ -14,3 +14,7 @@
 - Better config validation maybe?
 - Tweek column sizes of scores list
 - Tweek sizes and behavior of all components on MainWindow
+
+### Kinda done, but maybe some improvements?:
+- Filtering scores just like in osu! search (mostly done)
+

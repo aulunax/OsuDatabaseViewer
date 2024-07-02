@@ -25,5 +25,13 @@ namespace OsuDatabaseView.MainWindow.UserControls.Menu
             InitializeComponent();
             DataContext = new MenuViewModel();
         }
+        
+        public void SetMainWindowViewModel(MainWindowViewModel mainWindowViewModel)
+        {
+            if (DataContext is MenuViewModel menuViewModel)
+            {
+                menuViewModel.MainWindowViewModel = mainWindowViewModel;
+            }
+        }
     }
 }
