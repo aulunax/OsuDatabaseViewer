@@ -1,7 +1,6 @@
 # OsuDatabaseManager
 
 ### TODO:
-- Finish od,ar,cs,hp conversion when dt,ht,hr mods are applied
 - Add general info below scores list
 - Display bg and song info when it is selected
 - Show pp value for each score
