@@ -37,6 +37,38 @@ namespace OsuDatabaseView.MainWindow
                 OnPropertyChanged(nameof(FilteredScores));
             }
         }
+        private bool _isSideScoreInfoVisible;
+        public bool IsSideScoreInfoVisible
+        {
+            get { return _isSideScoreInfoVisible; }
+            set
+            {
+                _isSideScoreInfoVisible = value;
+                OnPropertyChanged(nameof(IsSideScoreInfoVisible));
+            }
+        }
+        public ICommand SelectionChangedCommand { get; set; }
+        private void SelectionChanged() {}
+        
+        private FullScore? _selectedScoreInfo;
+        
+        public FullScore? SelectedScoreInfo
+        {
+            get => _selectedScoreInfo;
+            set
+            {
+                if (_selectedScoreInfo != value)
+                {
+                    _selectedScoreInfo = value;
+                    OnPropertyChanged(nameof(SelectedScoreInfo));
+                    SelectionChangedCommand.Execute(_selectedScoreInfo);
+                    if (ConfigManager.Instance.Config.IsSideScoreInfoShown && _selectedScoreInfo is not null)
+                        IsSideScoreInfoVisible = true;
+                    else
+                        IsSideScoreInfoVisible = false;
+                }
+            }
+        }
 
         private string _totalNumberOfDisplayedScores;
 
@@ -73,6 +105,7 @@ namespace OsuDatabaseView.MainWindow
         public MainWindowViewModel()
         {
             UpdateFilteredScoresCommand = new RelayCommand(UpdateFilteredScores);
+            SelectionChangedCommand = new RelayCommand(SelectionChanged);
             LoadData();
         }
 
@@ -100,6 +133,11 @@ namespace OsuDatabaseView.MainWindow
             FilteredScores = new ObservableCollection<FullScore>(filteredEnumerable);
         }
 
+        private void OnSelectedScoreInfoChanged()
+        {
+            
+        }
+        
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName)
         {

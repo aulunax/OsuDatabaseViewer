@@ -8,7 +8,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CommunityToolkit.Mvvm.Input;
+using OsuDatabaseControl.DataTypes;
 using OsuDatabaseView.MainWindow.UserControls.Menu;
+using OsuDatabaseView.MainWindow.UserControls.ScoreInfo;
 
 namespace OsuDatabaseView.MainWindow
 {
@@ -17,6 +20,7 @@ namespace OsuDatabaseView.MainWindow
     /// </summary>
     public partial class MainWindow : Window
     {
+        private ScoreInfoViewModel _scoreInfoViewModel;
         public MainWindow()
         {
             InitializeComponent();
@@ -25,6 +29,17 @@ namespace OsuDatabaseView.MainWindow
             DataContext = mainWindowViewModel;
             
             menuView.SetMainWindowViewModel(mainWindowViewModel);
+            
+            _scoreInfoViewModel = new ScoreInfoViewModel();
+            scoreInfoView.DataContext = _scoreInfoViewModel;
+            mainWindowViewModel.SelectionChangedCommand = new RelayCommand<FullScore>(UpdateScoreInfoViewModel);
+
         }
+        
+        private void UpdateScoreInfoViewModel(FullScore selectedScoreInfo)
+        {
+            _scoreInfoViewModel.ScoreInfo = selectedScoreInfo;
+        }
+
     }
 }

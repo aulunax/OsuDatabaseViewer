@@ -28,6 +28,8 @@ public class FullScores
         Beatmaps beatmaps = OsuDBReader.ReadBeatmaps(Path.Combine(osuPath, FilePaths.OSU_OSUDB_FILENAME));
         BeatmapDictionary beatmapDictionary = new BeatmapDictionary(beatmaps);
 
+        ConfigManager.Instance.Config.Username = osuDBInfo.PlayerName;
+
         foreach (Score sc in scores.GetScores().Where(sc => sc.PlayerName == osuDBInfo.PlayerName))
         {
             try

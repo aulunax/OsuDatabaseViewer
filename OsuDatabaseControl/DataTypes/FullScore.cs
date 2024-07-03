@@ -90,6 +90,13 @@ namespace OsuDatabaseControl.DataTypes
                 HPDrain = float.Min(beatmap.HPDrain * ModsConstants.HR_HP_MULTIPILER, 10.0f);
                 OverallDifficulty = float.Min(beatmap.OverallDifficulty * ModsConstants.HR_OD_MULTIPILER, 10.0f);
             }
+            else if (Mods.HasFlag(Mods.Ez))
+            {
+                ApproachRate = beatmap.ApproachRate * ModsConstants.EZ_AR_MULTIPILER;
+                CircleSize = beatmap.CircleSize * ModsConstants.EZ_CS_MULTIPILER;
+                HPDrain = beatmap.HPDrain * ModsConstants.EZ_HP_MULTIPILER;
+                OverallDifficulty = beatmap.OverallDifficulty * ModsConstants.EZ_OD_MULTIPILER;
+            }
             else
             {
                 ApproachRate = beatmap.ApproachRate;
@@ -106,12 +113,18 @@ namespace OsuDatabaseControl.DataTypes
             OnlineOffset = beatmap.OnlineOffset;
             LastPlayedTime = beatmap.LastPlayedTime;
             
-            if (Mods.HasFlag(Mods.Dt))
+            // Speed changing mods:
+            if ((Mods & Mods.SpeedChanging) != 0)
             {
-                ApproachRate = DoubleTimeConversion.GetConvertedApproachRate(ApproachRate);
-                DrainTime = (int)(DrainTime / 1.5);
-                TotalTime = (int)(TotalTime / 1.5);
+                float speedMultiplier = Mods.HasFlag(Mods.Ht) ? ModsConstants.HT_SPEED_MULTIPILER : ModsConstants.DT_SPEED_MULTIPILER ;
+                
+                OverallDifficulty =
+                    DifficultySpeedChangeConverter.GetModifiedOverallDifficulty(OverallDifficulty, speedMultiplier);
+                ApproachRate = DifficultySpeedChangeConverter.GetModifiedApproachRate(ApproachRate, speedMultiplier);
+                DrainTime = (int)(DrainTime / speedMultiplier);
+                TotalTime = (int)(TotalTime / speedMultiplier);
             }
+
             
             switch (beatmap.GameplayMode)
             {
@@ -148,7 +161,7 @@ namespace OsuDatabaseControl.DataTypes
             return $"{Mods.ToAcronyms()}" +
                 $"[{PlayMode}] {ArtistName} - " +
                 $"{SongTitle}  [{DifficultyName}] " +
-                $"({CreatorName}, {StarRating.ToString("F2")}*)" +
+                $"({CreatorName}, {StarRating:F2}*)" +
                 $"Played on {Date}\n" +
                 $"Total Score: {TotalScore}\n" +
                 $"300s: {C300}\n100s: {C100}\n50s: " +

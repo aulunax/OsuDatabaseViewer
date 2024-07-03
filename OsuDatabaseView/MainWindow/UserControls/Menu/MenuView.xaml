@@ -20,7 +20,7 @@
         </MenuItem>
 
         <MenuItem Header="_View">
-
+            <MenuItem Header="Auto Start" StaysOpenOnClick="True" IsChecked="{Binding SideScoreInfoState}" Command="{Binding ChangeShowSideScoreInfoStateCommand}"/>
         </MenuItem>
         <MenuItem Header="_Config">
             <MenuItem Header="Auto Start" StaysOpenOnClick="True" IsChecked="{Binding AutoStartState}" Command="{Binding ChangeAutoStartStateCommand}"/>

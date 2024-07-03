@@ -11,6 +11,9 @@
             <local:BooleanNegationConverter x:Key="BooleanNegationConverter"/>
             <local:NullToNoneConverter x:Key="NullToNoneConverter"/>
             <local:StringToBooleanConverter x:Key="StringToBooleanConverter"/>
+            <local:LengthTimeToTimeConverter x:Key="LengthTimeToTimeConverter"/>
+            <local:ConcatenateConverter x:Key="ConcatenateConverter"/>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         </ResourceDictionary>
     </Application.Resources>
     

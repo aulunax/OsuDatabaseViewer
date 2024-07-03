@@ -11,12 +11,18 @@ namespace OsuDatabaseControl.Config
     public class Config
     {
         public string OsuDirectory { get; set; }
+        public string Username { get; set; }
         public bool AutoStart { get; set; }
+        
+        public bool IsSideScoreInfoShown { get; set; }
 
         public Config()
         {
             OsuDirectory = null;
+            Username = null;
             AutoStart = false;
+
+            IsSideScoreInfoShown = true;
         }
     }
 }

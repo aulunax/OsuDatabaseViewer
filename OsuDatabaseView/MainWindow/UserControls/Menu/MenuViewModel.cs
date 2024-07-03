@@ -28,6 +28,8 @@ namespace OsuDatabaseView.MainWindow.UserControls.Menu
         }
         
         public ICommand ChangeAutoStartStateCommand { get; private set; }
+        public ICommand ChangeShowSideScoreInfoStateCommand { get; private set; }
+
         public ICommand SaveScoresAsJsonCommand { get; private set; }
         public ICommand SaveScoresAsXmlCommand { get; private set; }
         public ICommand SaveScoresAsRawTextCommand { get; private set; }
@@ -58,15 +60,15 @@ namespace OsuDatabaseView.MainWindow.UserControls.Menu
                 OnPropertyChanged(nameof(AutoStartState));
             }
         }
-
-
-
-        public MenuViewModel()
+        
+        public bool SideScoreInfoState
         {
-            ChangeAutoStartStateCommand = new RelayCommand(ChangeAutoStartState);
-            SaveScoresAsJsonCommand = new RelayCommand(SaveScoresAsJson);
-            SaveScoresAsXmlCommand = new RelayCommand(SaveScoresAsXml);
-            SaveScoresAsRawTextCommand = new RelayCommand(SaveScoresAsRawText);
+            get { return ConfigManager.Instance.Config.IsSideScoreInfoShown; }
+            set
+            {
+                ConfigManager.Instance.Config.IsSideScoreInfoShown = value;
+                OnPropertyChanged(nameof(SideScoreInfoState));
+            }
         }
 
         private void ChangeAutoStartState()
@@ -74,6 +76,23 @@ namespace OsuDatabaseView.MainWindow.UserControls.Menu
             AutoStartState = !AutoStartState;
             ConfigManager.Instance.SaveConfig();
         }
+        
+        private void ChangeShowSideScoreInfoState()
+        {
+            SideScoreInfoState = !SideScoreInfoState;
+            ConfigManager.Instance.SaveConfig();
+        }
+
+        public MenuViewModel()
+        {
+            ChangeAutoStartStateCommand = new RelayCommand(ChangeAutoStartState);
+            ChangeShowSideScoreInfoStateCommand = new RelayCommand(ChangeShowSideScoreInfoState);
+            SaveScoresAsJsonCommand = new RelayCommand(SaveScoresAsJson);
+            SaveScoresAsXmlCommand = new RelayCommand(SaveScoresAsXml);
+            SaveScoresAsRawTextCommand = new RelayCommand(SaveScoresAsRawText);
+        }
+
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName)
