@@ -1,0 +1,3 @@
+[submodule "OsuFormatReader"]
+	path = OsuFormatReader
+	url = https://github.com/aulunax/OsuFormatReader
