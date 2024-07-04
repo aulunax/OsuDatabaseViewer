@@ -31,7 +31,6 @@
         <Style TargetType="ToolTip">
             <Setter Property="Padding" Value="3,1,3,1" />
         </Style>
-        <convert:LowPrecissionDoubleConverter x:Key="LowPrecissionDoubleConverter" />
         <convert:ModsToStringConverter x:Key="ModsToStringConverter" />
         <convert:BooleanToToolTipConverter x:Key="BooleanToToolTipConverter" />
     </Window.Resources>
@@ -58,7 +57,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="4" />
-                <ColumnDefinition MinWidth="200" Width="200"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <DataGrid x:Name="scoreDataGrid" Grid.Column="0" ItemsSource="{Binding FilteredScores}" IsReadOnly="True"
                       ColumnWidth="SizeToHeader" AutoGenerateColumns="False" HeadersVisibility="Column"
@@ -88,7 +87,7 @@
                     <DataGridTextColumn Header="Difficulty" Binding="{Binding DifficultyName}" MinWidth="100" />
                     <DataGridTextColumn Header="Creator Name" Binding="{Binding CreatorName}" />
                     <DataGridTextColumn Header="Stars"
-                                        Binding="{Binding StarRating, Converter={StaticResource LowPrecissionDoubleConverter}}" />
+                                        Binding="{Binding StarRating, Converter={StaticResource FloatingPoint2PointPrecisionConverter}}" />
                     <DataGridTextColumn Header="Mods"
                                         Binding="{Binding ., Converter={StaticResource ModsToStringConverter}}"
                                         SortMemberPath="Mods" Width="Auto" />

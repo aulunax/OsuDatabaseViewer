@@ -9,7 +9,7 @@ using System.Windows.Data;
 
 namespace OsuDatabaseView.Utils.Converters
 {
-    public class LowPrecissionDoubleConverter : IValueConverter
+    public class FloatingPoint2PointPrecisionConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

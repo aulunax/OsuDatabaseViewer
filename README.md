@@ -1,6 +1,7 @@
 # OsuDatabaseManager
 
 ### TODO:
+- Add song tags, source to scoreInfo
 - Add general info below scores list
 - Display bg and song info when it is selected
 - Show pp value for each score

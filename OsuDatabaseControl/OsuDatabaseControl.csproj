@@ -12,4 +12,8 @@
     <None Remove="scores.db" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\OsuFormatReader\OsuFormatReader.csproj" />
+  </ItemGroup>
+
 </Project>

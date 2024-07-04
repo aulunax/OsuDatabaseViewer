@@ -24,11 +24,13 @@
         </Style>
         <Style TargetType="TextBlock">
             <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Margin" Value="10,0,10,0"></Setter>
         </Style>
     </UserControl.Resources>
 
     <Grid>
-        <StackPanel Margin="10">
+        <Image Source="{Binding BeatmapBackgroundSource}" x:Name="BackgroundImage"/>
+        <StackPanel Margin="10" Background="#60000000">
             <TextBlock>
                 <Run Text="{Binding ScoreInfo.ArtistName}"/>
                 <Run Text="-"/>
@@ -53,17 +55,17 @@
             </TextBlock>
             <TextBlock>
                 <Run Text="CS:"/>
-                <Run Text="{Binding ScoreInfo.CircleSize}"/>
+                <Run Text="{Binding ScoreInfo.CircleSize, Converter={StaticResource FloatingPoint2PointPrecisionConverter}}"/>
                 <Run Text="AR:"/>
-                <Run Text="{Binding ScoreInfo.ApproachRate}"/>
+                <Run Text="{Binding ScoreInfo.ApproachRate, Converter={StaticResource FloatingPoint2PointPrecisionConverter}}"/>
                 <Run Text="OD:"/>
-                <Run Text="{Binding ScoreInfo.OverallDifficulty}"/>
+                <Run Text="{Binding ScoreInfo.OverallDifficulty, Converter={StaticResource FloatingPoint2PointPrecisionConverter}}"/>
                 <Run Text="HP:"/>
-                <Run Text="{Binding ScoreInfo.HPDrain}"/>
+                <Run Text="{Binding ScoreInfo.HPDrain, Converter={StaticResource FloatingPoint2PointPrecisionConverter}}"/>
             </TextBlock>
             <TextBlock>
                 <Run Text="Star Rating:"/>
-                <Run Text="{Binding ScoreInfo.StarRating}"/>
+                <Run Text="{Binding ScoreInfo.StarRating, Converter={StaticResource FloatingPoint2PointPrecisionConverter}}"/>
             </TextBlock>
             <TextBlock>
                 <Run Text="Circles:"/>
@@ -73,7 +75,7 @@
                 <Run Text="Spinners:"/>
                 <Run Text="{Binding ScoreInfo.NumberOfSpinners}"/>
             </TextBlock>
-            <Separator/>
+            <Separator Background="#ff000000" Margin="5"/>
             <TextBlock>
                 <Run Text="Played by"/>
                 <Run Text="{Binding ScoreInfo.PlayerName}"/>
@@ -92,7 +94,7 @@
             </TextBlock>
             <TextBlock>
                 <Run Text="Accuracy:"/>
-                <Run Text="{Binding ScoreInfo.Accuracy}"/>
+                <Run Text="{Binding ScoreInfo.Accuracy, Converter={StaticResource FloatingPoint2PointPrecisionConverter}}"/>
             </TextBlock>
             <TextBlock>
                 <Run Text="Mods:"/>

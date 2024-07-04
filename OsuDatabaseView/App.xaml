@@ -14,6 +14,8 @@
             <local:LengthTimeToTimeConverter x:Key="LengthTimeToTimeConverter"/>
             <local:ConcatenateConverter x:Key="ConcatenateConverter"/>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+            <local:FloatingPoint2PointPrecisionConverter x:Key="FloatingPoint2PointPrecisionConverter" />
+
         </ResourceDictionary>
     </Application.Resources>
     

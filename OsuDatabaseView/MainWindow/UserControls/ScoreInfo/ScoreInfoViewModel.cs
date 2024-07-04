@@ -6,9 +6,9 @@ namespace OsuDatabaseView.MainWindow.UserControls.ScoreInfo;
 
 public class ScoreInfoViewModel : INotifyPropertyChanged
 {
-    private FullScore? _scoreInfo;
+    private FullScore _scoreInfo;
 
-    public FullScore? ScoreInfo
+    public FullScore ScoreInfo
     {
         get => _scoreInfo;
         set
