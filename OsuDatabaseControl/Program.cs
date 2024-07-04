@@ -30,6 +30,8 @@ namespace OsuDatabaseControl // Note: actual namespace depends on the project na
             VideosEvent ve = (VideosEvent)e;
             Console.WriteLine(ve.eventType);
             
+            General.Read(new OsuFormatReader.OsuFormatReader(new StreamReader(new FileStream("osu!.db", FileMode.Open))));
+            
 
             return;
             CultureInfo customCulture = (CultureInfo)CultureInfo.InvariantCulture.Clone();
