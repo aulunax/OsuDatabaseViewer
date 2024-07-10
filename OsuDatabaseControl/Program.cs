@@ -8,9 +8,11 @@ using OsuDatabaseControl.DataTypes;
 using OsuDatabaseControl.DataTypes.Osu;
 using OsuDatabaseControl.DTO;
 using OsuFormatReader.Interfaces;
+using OsuFormatReader.IO;
 using OsuFormatReader.Sections;
 using OsuFormatReader.Sections.EventTypes;
 using OsuFormatReader.Sections.EventTypes.EventParamsTypes;
+using OsuFormatReader.Tests;
 using static System.Formats.Asn1.AsnWriter;
 
 namespace OsuDatabaseControl // Note: actual namespace depends on the project name.
@@ -19,19 +21,6 @@ namespace OsuDatabaseControl // Note: actual namespace depends on the project na
     {
         static void Main(string[] args)
         {
-            Events events = new Events();
-            
-            events.AddEvent(new BackgroundsEvent(0, new BackgroundsEventParams("filename",1,2)));
-            events.AddEvent(new VideosEvent(0, new VideosEventParams("filenamevideo",3,4)));
-
-            
-            IEvent? e = events.GetEvent(1);
-            
-            VideosEvent ve = (VideosEvent)e;
-            Console.WriteLine(ve.eventType);
-            
-            //General.Read(new OsuFormatReader.OsuFormatReader(new StreamReader(new FileStream("osu!.db", FileMode.Open))));
-            
 
             return;
             CultureInfo customCulture = (CultureInfo)CultureInfo.InvariantCulture.Clone();

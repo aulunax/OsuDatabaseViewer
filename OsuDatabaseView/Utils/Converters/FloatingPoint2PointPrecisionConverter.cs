@@ -17,6 +17,10 @@ namespace OsuDatabaseView.Utils.Converters
             {
                 return doubleValue.ToString("F2");
             }
+            if (value is float floatValue)
+            {
+                return floatValue.ToString("F2");
+            }
             return value;
         }
 

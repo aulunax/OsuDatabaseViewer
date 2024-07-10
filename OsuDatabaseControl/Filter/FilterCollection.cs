@@ -12,7 +12,8 @@ public class FilterCollection
                 term.Matches(s.ArtistName) || 
                 term.Matches(s.SongTitle) || 
                 term.Matches(s.CreatorName) || 
-                term.Matches(s.DifficultyName)
+                term.Matches(s.DifficultyName) ||
+                term.Matches(s.SongTags)
                 );
         }
         
@@ -41,9 +42,12 @@ public class FilterCollection
         if (criteria.Length.HasFilter)
             collection = collection.Where(s => criteria.Length.IsInRange(s.TotalTime));
         
+        // Added filters for OsuDatabaseManager:
         
         if (criteria.Mods.HasFilter)
-            collection = collection.Where(s => criteria.Mods.IsInRangeFlags(s.Mods));
+            collection = collection.Where(s => criteria.Mods.IsInRangeFlags(s.Mods));   
+        if (criteria.PlayMode.HasFilter)
+            collection = collection.Where(s => criteria.PlayMode.IsInRange(s.PlayMode));
         if (criteria.C300Count.HasFilter)
             collection = collection.Where(s => criteria.C300Count.IsInRange(s.C300));
         if (criteria.C100Count.HasFilter)
@@ -56,5 +60,7 @@ public class FilterCollection
             collection = collection.Where(s => criteria.TotalScore.IsInRange(s.TotalScore));
         if (criteria.Combo.HasFilter)
             collection = collection.Where(s => criteria.Combo.IsInRange(s.MaxCombo));
+        if (criteria.Bpm.HasFilter)
+            collection = collection.Where(s => criteria.Bpm.IsInRange(s.BPM));
     }
 }

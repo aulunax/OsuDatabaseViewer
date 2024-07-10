@@ -83,6 +83,9 @@ public class FilterParser
                 case "mods":
                 case "mod":
                     return TryUpdateCriteriaSet(ref criteria.Mods, op, value);
+                
+                case "mode":
+                    return TryUpdateCriteriaSet(ref criteria.PlayMode, op, value);
                     
                 case "c300":
                     return TryUpdateCriteriaRange(ref criteria.C300Count, op, value, tryParseInt);
@@ -103,6 +106,9 @@ public class FilterParser
                 case "combo":
                 case "maxcombo":
                     return TryUpdateCriteriaRange(ref criteria.Combo, op, value, tryParseInt);
+                
+                case "bpm":
+                    return TryUpdateCriteriaRange(ref criteria.Bpm, op, value);
 
                 
                 default:

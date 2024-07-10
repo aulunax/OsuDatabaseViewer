@@ -22,17 +22,20 @@ public class FilterCriteria
     public OptionalTextFilter Artist;
     public OptionalTextFilter Title;
     public OptionalTextFilter DifficultyName;
-    public OptionalSet<Mods> Mods = new OptionalSet<Mods>();
     public OptionalSet<BeatmapRankedStatus> OnlineStatus = new OptionalSet<BeatmapRankedStatus>();
     
     // Added filters for OsuDatabaseManager:
     
+    public OptionalSet<Mods> Mods = new OptionalSet<Mods>();
+    public OptionalSet<PlayMode> PlayMode = new OptionalSet<PlayMode>();
     public OptionalRange<int> Combo;
     public OptionalRange<int> MissCount;
     public OptionalRange<int> C300Count;
     public OptionalRange<int> C100Count;
     public OptionalRange<int> C50Count;
     public OptionalRange<int> TotalScore;
+    public OptionalRange<double> Bpm;
+
     
     
     public OptionalTextFilter[] SearchTerms = Array.Empty<OptionalTextFilter>();

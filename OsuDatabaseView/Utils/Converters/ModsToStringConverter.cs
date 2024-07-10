@@ -21,6 +21,10 @@ namespace OsuDatabaseView.Utils.Converters
             {
                 return $"{score.Mods.ToAcronyms()}";
             }
+            if (value is Mods mods)
+            {
+                return $"{mods.ToAcronyms()}";
+            }
             return value;
         }
 

@@ -6,101 +6,131 @@
              xmlns:local="clr-namespace:OsuDatabaseView.MainWindow.UserControls.ScoreInfo"
              xmlns:converters="clr-namespace:OsuDatabaseView.Utils.Converters"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
-    
+             d:DesignHeight="400" d:DesignWidth="300">
+
     <UserControl.DataContext>
-        <local:ScoreInfoViewModel/>
+        <local:ScoreInfoViewModel />
     </UserControl.DataContext>
-    
+
     <UserControl.Resources>
         <converters:ModsToStringConverter x:Key="ModsToStringConverter" />
         <Style TargetType="TextBox">
-            <Setter Property="TextWrapping" Value="Wrap"/>
-            <Setter Property="IsReadOnly" Value="True"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="IsReadOnly" Value="True" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
         </Style>
         <Style TargetType="TextBlock">
-            <Setter Property="TextWrapping" Value="Wrap"/>
-            <Setter Property="Margin" Value="10,0,10,0"></Setter>
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="Margin" Value="10,0,10,2" />
+            <Setter Property="FontSize" Value="14" />
         </Style>
     </UserControl.Resources>
 
-    <Grid>
-        <Image Source="{Binding BeatmapBackgroundSource}" x:Name="BackgroundImage"/>
-        <StackPanel Margin="10" Background="#60000000">
-            <TextBlock>
-                <Run Text="{Binding ScoreInfo.ArtistName}"/>
-                <Run Text="-"/>
-                <Run Text="{Binding ScoreInfo.SongTitle}"/>
-            </TextBlock>
-            <TextBlock>
-                <Run Text="{Binding ScoreInfo.ArtistNameUnicode}"/>
-                <Run Text="-"/>
-                <Run Text="{Binding ScoreInfo.SongTitleUnicode}"/>
-            </TextBlock>
-            <TextBlock>
-                <Run Text="Mapped by"/>
-                <Run Text="{Binding ScoreInfo.CreatorName}"/>
-            </TextBlock>
-            <TextBlock>
-                <Run Text="Length:"/>
-                <Run Text="{Binding ScoreInfo.TotalTime, Converter={StaticResource LengthTimeToTimeConverter}}"/>
-                <Run Text="BPM:"/>
-                <Run Text="?"/>
-                <Run Text="Objects:"/>
-                <Run Text="?"/>
-            </TextBlock>
-            <TextBlock>
-                <Run Text="CS:"/>
-                <Run Text="{Binding ScoreInfo.CircleSize, Converter={StaticResource FloatingPoint2PointPrecisionConverter}}"/>
-                <Run Text="AR:"/>
-                <Run Text="{Binding ScoreInfo.ApproachRate, Converter={StaticResource FloatingPoint2PointPrecisionConverter}}"/>
-                <Run Text="OD:"/>
-                <Run Text="{Binding ScoreInfo.OverallDifficulty, Converter={StaticResource FloatingPoint2PointPrecisionConverter}}"/>
-                <Run Text="HP:"/>
-                <Run Text="{Binding ScoreInfo.HPDrain, Converter={StaticResource FloatingPoint2PointPrecisionConverter}}"/>
-            </TextBlock>
-            <TextBlock>
-                <Run Text="Star Rating:"/>
-                <Run Text="{Binding ScoreInfo.StarRating, Converter={StaticResource FloatingPoint2PointPrecisionConverter}}"/>
-            </TextBlock>
-            <TextBlock>
-                <Run Text="Circles:"/>
-                <Run Text="{Binding ScoreInfo.NumberOfHitCircles}"/>
-                <Run Text="Sliders:"/>
-                <Run Text="{Binding ScoreInfo.NumberOfSliders}"/>
-                <Run Text="Spinners:"/>
-                <Run Text="{Binding ScoreInfo.NumberOfSpinners}"/>
-            </TextBlock>
-            <Separator Background="#ff000000" Margin="5"/>
-            <TextBlock>
-                <Run Text="Played by"/>
-                <Run Text="{Binding ScoreInfo.PlayerName}"/>
-                <Run Text="on"/>
-                <Run Text="{Binding ScoreInfo.Date}"/>
-            </TextBlock>
-            <TextBlock>
-                <Run Text="300:"/>
-                <Run Text="{Binding ScoreInfo.C300}"/>
-                <Run Text="100:"/>
-                <Run Text="{Binding ScoreInfo.C100}"/> 
-                <Run Text="50:"/>
-                <Run Text="{Binding ScoreInfo.C50}"/> 
-                <Run Text="Miss:"/>
-                <Run Text="{Binding ScoreInfo.Miss}"/>
-            </TextBlock>
-            <TextBlock>
-                <Run Text="Accuracy:"/>
-                <Run Text="{Binding ScoreInfo.Accuracy, Converter={StaticResource FloatingPoint2PointPrecisionConverter}}"/>
-            </TextBlock>
-            <TextBlock>
-                <Run Text="Mods:"/>
-                <Run Text="{Binding ScoreInfo.Mods, Converter={StaticResource ModsToStringConverter}}"/>
-            </TextBlock>
-        </StackPanel>
+    <Grid x:Name="MainGrid">
+        <Rectangle Margin="1" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Rectangle.Fill>
+                <ImageBrush ImageSource="{Binding ImagePath, Converter={StaticResource ImagePathConverter}}"
+                            Stretch="UniformToFill" />
+            </Rectangle.Fill>
+        </Rectangle>
+        <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" Margin="10">
+            <StackPanel Width="300" Background="#90000000">
+                <TextBlock Margin="10,10,10,0">
+                    <Run FontWeight="Bold" Text="{Binding ScoreInfo.ArtistName}"
+                         ToolTip="{Binding ScoreInfo.ArtistNameUnicode}" />
+                    <Run Text="-" />
+                    <Run FontWeight="Bold" Text="{Binding ScoreInfo.SongTitle}"
+                         ToolTip="{Binding ScoreInfo.SongTitleUnicode}" />
+                </TextBlock>
+                <TextBlock>
+                    <Run Text="Mapped by" />
+                    <Run FontWeight="Bold" Text="{Binding ScoreInfo.CreatorName}" />
+                </TextBlock>
+                <TextBlock>
+                    <Run FontWeight="Bold" Text="Length:" />
+                    <Run Text="{Binding ScoreInfo.TotalTime, Converter={StaticResource LengthTimeToTimeConverter}}" />
+                    <Run FontWeight="Bold" Text="BPM:" />
+                    <Run>
+                        <Run.Text>
+                            <MultiBinding Converter="{StaticResource BpmMultiValueConverter}">
+                                <Binding Path="ScoreInfo.BPM" />
+                                <Binding Path="ScoreInfo.LowestBPM" />
+                                <Binding Path="ScoreInfo.HighestBPM" />
+                            </MultiBinding>
+                        </Run.Text>
+                    </Run>
+                    <Run FontWeight="Bold" Text="Objects:" />
+                    <Run Text="{Binding ScoreInfo.TotalNumberOfObjects, Mode=OneWay}" />
+                </TextBlock>
+                <TextBlock>
+                    <Run FontWeight="Bold" Text="CS:" />
+                    <Run
+                        Text="{Binding ScoreInfo.CircleSize, Converter={StaticResource FloatingPoint2PointPrecisionConverter}}" />
+                    <Run FontWeight="Bold" Text="AR:" />
+                    <Run
+                        Text="{Binding ScoreInfo.ApproachRate, Converter={StaticResource FloatingPoint2PointPrecisionConverter}}" />
+                    <Run FontWeight="Bold" Text="OD:" />
+                    <Run
+                        Text="{Binding ScoreInfo.OverallDifficulty, Converter={StaticResource FloatingPoint2PointPrecisionConverter}}" />
+                    <Run FontWeight="Bold" Text="HP:" />
+                    <Run
+                        Text="{Binding ScoreInfo.HPDrain, Converter={StaticResource FloatingPoint2PointPrecisionConverter}}" />
+                </TextBlock>
+                <TextBlock>
+                    <Run FontWeight="Bold" Text="Star Rating:" />
+                    <Run
+                        Text="{Binding ScoreInfo.StarRating, Converter={StaticResource FloatingPoint2PointPrecisionConverter}}" />
+                </TextBlock>
+                <TextBlock>
+                    <Run FontWeight="Bold" Text="Circles:" />
+                    <Run Text="{Binding ScoreInfo.NumberOfHitCircles}" />
+                    <Run FontWeight="Bold" Text="Sliders:" />
+                    <Run Text="{Binding ScoreInfo.NumberOfSliders}" />
+                    <Run FontWeight="Bold" Text="Spinners:" />
+                    <Run Text="{Binding ScoreInfo.NumberOfSpinners}" />
+                </TextBlock>
+                <Separator Background="#ffffffff" Margin="10" />
+                <TextBlock>
+                    <Run Text="Played by" />
+                    <Run FontWeight="Bold" Text="{Binding ScoreInfo.PlayerName}" />
+                    <Run Text="on" />
+                    <Run Text="{Binding ScoreInfo.Date}" />
+                </TextBlock>
+                <TextBlock>
+                    <Run FontWeight="Bold" Text="300:" />
+                    <Run Text="{Binding ScoreInfo.C300}" />
+                    <Run FontWeight="Bold" Text="100:" />
+                    <Run Text="{Binding ScoreInfo.C100}" />
+                    <Run FontWeight="Bold" Text="50:" />
+                    <Run Text="{Binding ScoreInfo.C50}" />
+                    <Run FontWeight="Bold" Text="Miss:" />
+                    <Run Text="{Binding ScoreInfo.Miss}" />
+                </TextBlock>
+                <TextBlock>
+                    <Run FontWeight="Bold" Text="Accuracy:" />
+                    <Run
+                        Text="{Binding ScoreInfo.Accuracy, Mode=OneWay, Converter={StaticResource FloatingPointToPercentConverter}}" />
+                </TextBlock>
+                <TextBlock>
+                    <Run FontWeight="Bold" Text="Mods:" />
+                    <Run Text="{Binding ScoreInfo.Mods, Converter={StaticResource ModsToStringConverter}}" />
+                </TextBlock>
+                <Separator Background="#ffffffff" Margin="10" />
+                <TextBlock>
+                    <Run FontWeight="Bold" Text="Source:" />
+                    <Run Text="{Binding ScoreInfo.SongSource}" />
+                </TextBlock>
+                <TextBlock TextWrapping="Wrap" Margin="10,0,10,10">
+                    <Run FontWeight="Bold" Text="Tags:" />
+                    <Run Text="{Binding ScoreInfo.SongTags}" />
+                </TextBlock>
+            </StackPanel>
+        </ScrollViewer>
+
     </Grid>
 
 </UserControl>

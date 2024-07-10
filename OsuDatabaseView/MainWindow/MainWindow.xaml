@@ -106,6 +106,7 @@
                           VerticalAlignment="Stretch"
                           Background="Gray"
                           ResizeBehavior="PreviousAndNext"
+                          IsEnabled="False"
                           Visibility="{Binding IsSideScoreInfoVisible, 
                           Converter={StaticResource BooleanToVisibilityConverter}}" />
             <Grid Grid.Column="2" Visibility="{Binding IsSideScoreInfoVisible, 

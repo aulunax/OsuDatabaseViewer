@@ -3,15 +3,17 @@ using System.Windows.Data;
 
 namespace OsuDatabaseView.Utils.Converters;
 
-public class LengthTimeToTimeConverter : IValueConverter
+public class FloatingPointToPercentConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is int totalTime)
+        if (value is double doubleValue)
         {
-            int minutes = totalTime / 60000;
-            int seconds = (totalTime / 1000) % 60;
-            return $"{(minutes < 10 ? $"0{minutes}" : minutes.ToString())}:{(seconds < 10 ? $"0{seconds}" : seconds.ToString())}";
+            return (doubleValue*100).ToString("F2") + "%";
+        }
+        if (value is float floatValue)
+        {
+            return (floatValue*100).ToString("F2") + "%";
         }
         return value;
     }

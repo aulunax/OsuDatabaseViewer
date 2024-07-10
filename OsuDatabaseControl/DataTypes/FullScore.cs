@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,6 +27,7 @@ namespace OsuDatabaseControl.DataTypes
         public string DifficultyName { get; set; }
         public string AudioFileName { get; set; }
         public string MD5Hash { get; set; }
+        public string FolderName { get; set; }
         public string OsuFileName { get; set; }
         public BeatmapRankedStatus RankedStatus { get; set; }
         public short NumberOfHitCircles { get; set; }
@@ -47,16 +49,46 @@ namespace OsuDatabaseControl.DataTypes
         public short C100 { get; set; }
         public short C50 { get; set; }
         public short Miss { get; set; }
+        public short Katu { get; set; }
+        public short Geki { get; set; }
         public int TotalScore { get; set; }
         public short MaxCombo { get; set; }
         public bool Perfect { get; set; }
         public DateTime Date { get; set; }
 
+        // BPM
+        public double BPM { get; set; }
+        public double LowestBPM { get; set; }
+        public double HighestBPM { get; set; }
+
+        public int TotalNumberOfObjects => NumberOfSliders + NumberOfHitCircles + NumberOfSpinners;
+
+        public double Accuracy
+        {
+            get
+            {
+                switch (PlayMode)
+                {
+                    case PlayMode.Osu:
+                        return (C300 * 300.0 + C100 * 100.0 + C50 * 50.0) / ((C300 + C100 + C50 + Miss) * 300.0);
+                    case PlayMode.Taiko:
+                        return (C300 + C100 * 0.5) / (double)(C300 + C100 + Miss);
+                    case PlayMode.OsuMania:
+                        return ((C300 + Geki) * 300.0 + Katu * 200.0 + C100 * 100.0 + C50 * 50.0) /
+                                ((C300 + Geki + Katu + C100 + C50 + Miss) * 300.0);
+                    case PlayMode.CatchTheBeat:
+                        return (C300 + C100 + C50) / (double)(C300 + C100 + C50 + Katu + Miss);
+                    default:
+                        return 0;
+                }
+            }
+        }
+
 
         public FullScore(Score score, BeatmapDictionary beatmapDict)
         {
             Beatmap beatmap = beatmapDict.GetBeatmap(score.MapHash);
-            
+
             PlayerName = score.PlayerName;
             PlayMode = score.PlayMode;
             Mods = (Mods)score.Mods;
@@ -64,11 +96,13 @@ namespace OsuDatabaseControl.DataTypes
             C100 = score.C100;
             C50 = score.C50;
             Miss = score.Miss;
+            Katu = score.Katu;
+            Geki = score.Geki;
             TotalScore = score.TotalScore;
             MaxCombo = score.MaxCombo;
             Perfect = score.Perfect;
             Date = score.Date;
-            
+
             SongTitle = beatmap.SongTitle;
             ArtistName = beatmap.ArtistName;
             ArtistNameUnicode = beatmap.ArtistNameUnicode;
@@ -78,11 +112,12 @@ namespace OsuDatabaseControl.DataTypes
             AudioFileName = beatmap.AudioFileName;
             MD5Hash = beatmap.MD5Hash;
             OsuFileName = beatmap.OsuFileName;
+            FolderName = beatmap.FolderName;
             RankedStatus = beatmap.RankedStatus;
             NumberOfHitCircles = beatmap.NumberOfHitCircles;
             NumberOfSliders = beatmap.NumberOfSliders;
             NumberOfSpinners = beatmap.NumberOfSpinners;
-            
+
             if (Mods.HasFlag(Mods.Hr))
             {
                 ApproachRate = float.Min(beatmap.ApproachRate * ModsConstants.HR_AR_MULTIPILER, 10.0f);
@@ -112,20 +147,8 @@ namespace OsuDatabaseControl.DataTypes
             SongTags = beatmap.SongTags;
             OnlineOffset = beatmap.OnlineOffset;
             LastPlayedTime = beatmap.LastPlayedTime;
-            
-            // Speed changing mods:
-            if ((Mods & Mods.SpeedChanging) != 0)
-            {
-                float speedMultiplier = Mods.HasFlag(Mods.Ht) ? ModsConstants.HT_SPEED_MULTIPILER : ModsConstants.DT_SPEED_MULTIPILER ;
-                
-                OverallDifficulty =
-                    DifficultySpeedChangeConverter.GetModifiedOverallDifficulty(OverallDifficulty, speedMultiplier);
-                ApproachRate = DifficultySpeedChangeConverter.GetModifiedApproachRate(ApproachRate, speedMultiplier);
-                DrainTime = (int)(DrainTime / speedMultiplier);
-                TotalTime = (int)(TotalTime / speedMultiplier);
-            }
 
-            
+
             switch (beatmap.GameplayMode)
             {
                 case PlayMode.Osu:
@@ -144,35 +167,66 @@ namespace OsuDatabaseControl.DataTypes
                     StarRating = 0.0;
                     break;
             }
+
+            LowestBPM = beatmap.TimingPoints.Where(tp => tp.Uninherited).Min(tp => 1 / tp.BPM * 60000);
+            HighestBPM = beatmap.TimingPoints.Where(tp => tp.Uninherited).Max(tp => 1 / tp.BPM * 60000);
+
+            // get most common value of BPM
+            BPM = beatmap.TimingPoints
+                .Where(tp => tp.Uninherited)
+                .GroupBy(tp => 1 / tp.BPM * 60000)
+                .OrderByDescending(g => g.Count())
+                .Select(g => g.Key)
+                .First();
+
+
+            // Speed changing mods:
+            if ((Mods & Mods.SpeedChanging) != 0)
+            {
+                float speedMultiplier = Mods.HasFlag(Mods.Ht)
+                    ? ModsConstants.HT_SPEED_MULTIPILER
+                    : ModsConstants.DT_SPEED_MULTIPILER;
+
+                OverallDifficulty =
+                    DifficultySpeedChangeConverter.GetModifiedOverallDifficulty(OverallDifficulty, speedMultiplier);
+                ApproachRate = DifficultySpeedChangeConverter.GetModifiedApproachRate(ApproachRate, speedMultiplier);
+                DrainTime = (int)(DrainTime / speedMultiplier);
+                TotalTime = (int)(TotalTime / speedMultiplier);
+                BPM = BPM * speedMultiplier;
+                LowestBPM = LowestBPM * speedMultiplier;
+                HighestBPM = HighestBPM * speedMultiplier;
+            }
         }
 
         private double findStarRating(IntDoublePair[] starRating, Mods mods)
         {
             foreach (IntDoublePair rating in starRating)
             {
-                if (rating.IntValue == (int)mods) { 
+                if (rating.IntValue == (int)mods)
+                {
                     return rating.DoubleValue;
                 }
             }
+
             return 0.0;
         }
+
         public override string ToString()
         {
             return $"{Mods.ToAcronyms()}" +
-                $"[{PlayMode}] {ArtistName} - " +
-                $"{SongTitle}  [{DifficultyName}] " +
-                $"({CreatorName}, {StarRating:F2}*)" +
-                $"Played on {Date}\n" +
-                $"Total Score: {TotalScore}\n" +
-                $"300s: {C300}\n100s: {C100}\n50s: " +
-                $"{C50}\nMiss: {Miss}\nMax Combo: {MaxCombo} " +
-                $"{(Perfect ? "(PFC)" : "")}";
+                   $"[{PlayMode}] {ArtistName} - " +
+                   $"{SongTitle}  [{DifficultyName}] " +
+                   $"({CreatorName}, {StarRating:F2}*)" +
+                   $"Played on {Date}\n" +
+                   $"Total Score: {TotalScore}\n" +
+                   $"300s: {C300}\n100s: {C100}\n50s: " +
+                   $"{C50}\nMiss: {Miss}\nMax Combo: {MaxCombo} " +
+                   $"{(Perfect ? "(PFC)" : "")}";
         }
 
         public object Clone()
         {
             return MemberwiseClone();
         }
-
     }
 }

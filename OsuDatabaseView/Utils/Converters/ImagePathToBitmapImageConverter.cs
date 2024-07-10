@@ -1,19 +1,18 @@
 ﻿using System.Globalization;
 using System.Windows.Data;
+using System.Windows.Media.Imaging;
 
 namespace OsuDatabaseView.Utils.Converters;
 
-public class LengthTimeToTimeConverter : IValueConverter
+public class ImagePathToBitmapImageConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is int totalTime)
-        {
-            int minutes = totalTime / 60000;
-            int seconds = (totalTime / 1000) % 60;
-            return $"{(minutes < 10 ? $"0{minutes}" : minutes.ToString())}:{(seconds < 10 ? $"0{seconds}" : seconds.ToString())}";
-        }
-        return value;
+        var path = value as string;
+        if (string.IsNullOrEmpty(path))
+            return null;
+
+        return new BitmapImage(new Uri(path));
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
