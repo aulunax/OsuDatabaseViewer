@@ -41,10 +41,12 @@
             <StackPanel Width="300" Background="#90000000">
                 <TextBlock Margin="10,10,10,0">
                     <Run FontWeight="Bold" Text="{Binding ScoreInfo.ArtistName}"
-                         ToolTip="{Binding ScoreInfo.ArtistNameUnicode}" />
+                         ToolTip="{Binding ScoreInfo.ArtistNameUnicode}"
+                         ToolTipService.InitialShowDelay="300"/>
                     <Run Text="-" />
                     <Run FontWeight="Bold" Text="{Binding ScoreInfo.SongTitle}"
-                         ToolTip="{Binding ScoreInfo.SongTitleUnicode}" />
+                         ToolTip="{Binding ScoreInfo.SongTitleUnicode}"
+                         ToolTipService.InitialShowDelay="300"/>
                 </TextBlock>
                 <TextBlock>
                     <Run Text="Mapped by" />

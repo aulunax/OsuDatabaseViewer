@@ -35,6 +35,8 @@ public class FilterCriteria
     public OptionalRange<int> C50Count;
     public OptionalRange<int> TotalScore;
     public OptionalRange<double> Bpm;
+    public OptionalRange<double> Accuracy;
+
 
     
     

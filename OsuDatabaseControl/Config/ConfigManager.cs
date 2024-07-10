@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using OsuDatabaseControl.Enums.Display;
 using OsuDatabaseControl.IO;
 
 namespace OsuDatabaseControl.Config
@@ -56,8 +57,14 @@ namespace OsuDatabaseControl.Config
             if (!IsValidOsuPath())
             {
                 _config.OsuDirectory = null;
-                SaveConfig();
             }
+            
+            if (_config.MainColumnVisibility == 0)
+            {
+                _config.MainColumnVisibility = MainColumnVisibility.Default;
+            }
+            SaveConfig();
+
         }
 
         public bool IsValidOsuPath()

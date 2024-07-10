@@ -73,7 +73,7 @@ namespace OsuDatabaseControl.DataTypes
                         return (C300 * 300.0 + C100 * 100.0 + C50 * 50.0) / ((C300 + C100 + C50 + Miss) * 300.0);
                     case PlayMode.Taiko:
                         return (C300 + C100 * 0.5) / (double)(C300 + C100 + Miss);
-                    case PlayMode.OsuMania:
+                    case PlayMode.Mania:
                         return ((C300 + Geki) * 300.0 + Katu * 200.0 + C100 * 100.0 + C50 * 50.0) /
                                 ((C300 + Geki + Katu + C100 + C50 + Miss) * 300.0);
                     case PlayMode.CatchTheBeat:
@@ -160,7 +160,7 @@ namespace OsuDatabaseControl.DataTypes
                 case PlayMode.CatchTheBeat:
                     StarRating = findStarRating(beatmap.StarRatingCTB, Mods.MaskOnlyDifficultyChanging());
                     break;
-                case PlayMode.OsuMania:
+                case PlayMode.Mania:
                     StarRating = findStarRating(beatmap.StarRatingMania, Mods.MaskOnlyDifficultyChanging());
                     break;
                 default:

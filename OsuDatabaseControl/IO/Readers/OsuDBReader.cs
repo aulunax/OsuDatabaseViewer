@@ -19,9 +19,8 @@ namespace OsuDatabaseControl.IO.Readers
                 using (FileStream stream = new FileStream(filename, FileMode.Open, FileAccess.Read))
                 {
                     OsuBinaryReader reader = new OsuBinaryReader(stream);
-                    OsuDBInfo osuInfo = new OsuDBInfo();
-                    OsuDBInfo.ReadOsuDBInfo(reader, osuInfo);
-
+                    OsuDBInfo osuInfo = OsuDBInfo.ReadOsuDBInfo(reader);
+                    
                     for (int i = 0; i < osuInfo.BeatmapsCount; i++)
                     {
                         beatmaps.AddBeatmap(Beatmap.ReadBeatmap(reader, null, osuInfo.Version));

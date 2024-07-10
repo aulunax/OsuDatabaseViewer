@@ -29,8 +29,11 @@ public class FullScores
         BeatmapDictionary beatmapDictionary = new BeatmapDictionary(beatmaps);
 
         ConfigManager.Instance.Config.Username = osuDBInfo.PlayerName;
-
-        foreach (Score sc in scores.GetScores().Where(sc => sc.PlayerName == osuDBInfo.PlayerName))
+        
+        IEnumerable<Score> playerScores = scores.GetScores().Where(sc => sc.PlayerName == osuDBInfo.PlayerName);
+        fullScores.Capacity = playerScores.Count();
+        
+        foreach (Score sc in playerScores)
         {
             try
             {

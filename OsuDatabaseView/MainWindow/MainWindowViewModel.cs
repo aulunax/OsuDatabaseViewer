@@ -17,6 +17,7 @@ using OsuDatabaseControl.DataAccess;
 using OsuDatabaseControl.DataTypes;
 using OsuDatabaseControl.DataTypes.Osu;
 using OsuDatabaseControl.DTO;
+using OsuDatabaseControl.Enums.Display;
 using OsuDatabaseControl.Filter;
 
 
@@ -26,6 +27,20 @@ namespace OsuDatabaseView.MainWindow
     {
         private ObservableCollection<FullScore> _filteredScores;
         private FullScores _originalScores = new FullScores(); 
+        private MainColumnVisibility _mainColumnVisibility;
+        
+        public MainColumnVisibility MainColumnVisibility
+        {
+            get => _mainColumnVisibility;
+            set
+            {
+                if (_mainColumnVisibility != value)
+                {
+                    _mainColumnVisibility = value;
+                    OnPropertyChanged(nameof(MainColumnVisibility));
+                }
+            }
+        }
 
         public ObservableCollection<FullScore> FilteredScores
         {
@@ -104,6 +119,7 @@ namespace OsuDatabaseView.MainWindow
         
         public MainWindowViewModel()
         {
+            MainColumnVisibility = ConfigManager.Instance.Config.MainColumnVisibility;
             UpdateFilteredScoresCommand = new RelayCommand(UpdateFilteredScores);
             SelectionChangedCommand = new RelayCommand(SelectionChanged);
             LoadData();
@@ -127,7 +143,7 @@ namespace OsuDatabaseView.MainWindow
             FilterCriteria criteria = new FilterCriteria();
             FilterParser.ApplyQueries(criteria, SearchBoxQuery);
 
-            var filteredEnumerable = _originalScores.GetFullScores().AsEnumerable(); 
+            IEnumerable<FullScore> filteredEnumerable = _originalScores.GetFullScores(); 
             FilterCollection.Filter(ref filteredEnumerable, criteria);
             
             FilteredScores = new ObservableCollection<FullScore>(filteredEnumerable);

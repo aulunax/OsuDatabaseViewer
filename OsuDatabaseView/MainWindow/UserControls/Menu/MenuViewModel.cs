@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Windows.Input;
 using OsuDatabaseControl.Config;
 using CommunityToolkit.Mvvm.Input;
+using OsuDatabaseControl.Enums.Display;
 using OsuDatabaseControl.IO.Writers;
 using OsuDatabaseView.Utils.Dialogs;
 
@@ -29,6 +30,8 @@ namespace OsuDatabaseView.MainWindow.UserControls.Menu
         
         public ICommand ChangeAutoStartStateCommand { get; private set; }
         public ICommand ChangeShowSideScoreInfoStateCommand { get; private set; }
+        public ICommand ChangeMainColumnVisibilityStateCommand { get; private set; }
+
 
         public ICommand SaveScoresAsJsonCommand { get; private set; }
         public ICommand SaveScoresAsXmlCommand { get; private set; }
@@ -48,8 +51,18 @@ namespace OsuDatabaseView.MainWindow.UserControls.Menu
         {
             ScoresToFileSaver.SaveFile(".txt","OsuDBManagerScores", FullScoresWriter.WriteToText, MainWindowViewModel.FilteredScores);
         }
-        
-        
+
+        public MainColumnVisibility MainColumnVisibilityState
+        {
+            get { return ConfigManager.Instance.Config.MainColumnVisibility; }
+            set
+            {
+                if (ConfigManager.Instance.Config.MainColumnVisibility == value) return;
+                ConfigManager.Instance.Config.MainColumnVisibility = value;
+                MainWindowViewModel.MainColumnVisibility = value;
+                OnPropertyChanged(nameof(MainColumnVisibilityState));
+            }
+        }
         
         public bool AutoStartState
         {
@@ -77,6 +90,15 @@ namespace OsuDatabaseView.MainWindow.UserControls.Menu
             ConfigManager.Instance.SaveConfig();
         }
         
+        private void ChangeMainColumnVisibilityState(string mask)
+        {
+            if (!Enum.TryParse<MainColumnVisibility>(mask, out MainColumnVisibility maskEnum)) return;
+            if ((MainColumnVisibilityState ^ maskEnum) == 0) return;
+            if (maskEnum == MainColumnVisibility.Default) MainColumnVisibilityState = maskEnum;
+            else MainColumnVisibilityState ^= maskEnum;
+            ConfigManager.Instance.SaveConfig();
+        }
+        
         private void ChangeShowSideScoreInfoState()
         {
             SideScoreInfoState = !SideScoreInfoState;
@@ -85,6 +107,7 @@ namespace OsuDatabaseView.MainWindow.UserControls.Menu
 
         public MenuViewModel()
         {
+            ChangeMainColumnVisibilityStateCommand = new RelayCommand<string>(ChangeMainColumnVisibilityState);
             ChangeAutoStartStateCommand = new RelayCommand(ChangeAutoStartState);
             ChangeShowSideScoreInfoStateCommand = new RelayCommand(ChangeShowSideScoreInfoState);
             SaveScoresAsJsonCommand = new RelayCommand(SaveScoresAsJson);

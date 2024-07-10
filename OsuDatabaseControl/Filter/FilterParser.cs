@@ -109,6 +109,10 @@ public class FilterParser
                 
                 case "bpm":
                     return TryUpdateCriteriaRange(ref criteria.Bpm, op, value);
+                
+                case "accuracy":
+                case "acc":
+                    return TryUpdateCriteriaRange(ref criteria.Accuracy, op, value);
 
                 
                 default:

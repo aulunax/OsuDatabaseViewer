@@ -9,7 +9,7 @@
         xmlns:menu="clr-namespace:OsuDatabaseView.MainWindow.UserControls.Menu"
         xmlns:scoreinfo="clr-namespace:OsuDatabaseView.MainWindow.UserControls.ScoreInfo"
         mc:Ignorable="d"
-        Title="Osu! Database Manager" Height="450" Width="1200">
+        Title="Osu! Database Manager" Height="600" Width="1280">
 
     <Window.DataContext>
         <local:MainWindowViewModel />
@@ -57,8 +57,10 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="4" />
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
+            <!-- Workaround for changing visibility of DataGrid columns -->
+            <FrameworkElement x:Name="dummyElement" Visibility="Collapsed"/>
             <DataGrid x:Name="scoreDataGrid" Grid.Column="0" ItemsSource="{Binding FilteredScores}" IsReadOnly="True"
                       ColumnWidth="SizeToHeader" AutoGenerateColumns="False" HeadersVisibility="Column"
                       GridLinesVisibility="None"
@@ -81,24 +83,121 @@
                     </DataTemplate>
                 </DataGrid.Resources>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Mode" Binding="{Binding PlayMode}" />
-                    <DataGridTextColumn Header="Artist" Binding="{Binding ArtistName}" MinWidth="100" />
-                    <DataGridTextColumn Header="Song Title" Binding="{Binding SongTitle}" MinWidth="100" />
-                    <DataGridTextColumn Header="Difficulty" Binding="{Binding DifficultyName}" MinWidth="100" />
-                    <DataGridTextColumn Header="Creator Name" Binding="{Binding CreatorName}" />
+                    <DataGridTextColumn Header="Mode" Binding="{Binding PlayMode}"
+                                        Visibility="{Binding DataContext.MainColumnVisibility, 
+                                            Converter={StaticResource MainColumnVisibilityConverter}, 
+                                            ConverterParameter=Mode, 
+                                            Source={x:Reference dummyElement}}" />
+                    <DataGridTextColumn Header="Artist" Binding="{Binding ArtistName}" MinWidth="100"
+                                        Visibility="{Binding DataContext.MainColumnVisibility, 
+                                            Converter={StaticResource MainColumnVisibilityConverter}, 
+                                            ConverterParameter=Artist, 
+                                            Source={x:Reference dummyElement}}" />
+                    <DataGridTextColumn Header="Title" Binding="{Binding SongTitle}" MinWidth="100"
+                                        Visibility="{Binding DataContext.MainColumnVisibility, 
+                                            Converter={StaticResource MainColumnVisibilityConverter}, 
+                                            ConverterParameter=Title, 
+                                            Source={x:Reference dummyElement}}" />
+                    <DataGridTextColumn Header="Difficulty" Binding="{Binding DifficultyName}" MinWidth="100"
+                                        Visibility="{Binding DataContext.MainColumnVisibility, 
+                                            Converter={StaticResource MainColumnVisibilityConverter}, 
+                                            ConverterParameter=Difficulty, 
+                                            Source={x:Reference dummyElement}}" />
+                    <DataGridTextColumn Header="Creator Name" Binding="{Binding CreatorName}"
+                                        Visibility="{Binding DataContext.MainColumnVisibility, 
+                                            Converter={StaticResource MainColumnVisibilityConverter}, 
+                                            ConverterParameter=Creator, 
+                                            Source={x:Reference dummyElement}}" />
                     <DataGridTextColumn Header="Stars"
-                                        Binding="{Binding StarRating, Converter={StaticResource FloatingPoint2PointPrecisionConverter}}" />
+                                        Binding="{Binding StarRating, 
+                                            Converter={StaticResource FloatingPoint2PointPrecisionConverter}}"
+                                        Visibility="{Binding DataContext.MainColumnVisibility, 
+                                            Converter={StaticResource MainColumnVisibilityConverter}, 
+                                            ConverterParameter=Stars, 
+                                            Source={x:Reference dummyElement}}" />
                     <DataGridTextColumn Header="Mods"
-                                        Binding="{Binding ., Converter={StaticResource ModsToStringConverter}}"
-                                        SortMemberPath="Mods" Width="Auto" />
-                    <DataGridTextColumn Header="300" Binding="{Binding C300}" />
-                    <DataGridTextColumn Header="100" Binding="{Binding C100}" />
-                    <DataGridTextColumn Header="50" Binding="{Binding C50}" />
-                    <DataGridTextColumn Header="Miss" Binding="{Binding Miss}" />
-                    <DataGridTextColumn Header="Total Score" Binding="{Binding TotalScore}" />
+                                        Binding="{Binding ., 
+                                            Converter={StaticResource ModsToStringConverter}}"
+                                        SortMemberPath="Mods" Width="Auto"
+                                        Visibility="{Binding DataContext.MainColumnVisibility, 
+                                            Converter={StaticResource MainColumnVisibilityConverter}, 
+                                            ConverterParameter=Mods, 
+                                            Source={x:Reference dummyElement}}" />
+                    <DataGridTextColumn Header="Accuracy"
+                                        Binding="{Binding Accuracy, 
+                                            Converter={StaticResource FloatingPointToPercentConverter}}"
+                                        Visibility="{Binding DataContext.MainColumnVisibility, 
+                                            Converter={StaticResource MainColumnVisibilityConverter}, 
+                                            ConverterParameter=Accuracy, 
+                                            Source={x:Reference dummyElement}}" />
+                    <DataGridTextColumn Header="C300" Binding="{Binding C300}"
+                                        Visibility="{Binding DataContext.MainColumnVisibility, 
+                                            Converter={StaticResource MainColumnVisibilityConverter}, 
+                                            ConverterParameter=C300, 
+                                            Source={x:Reference dummyElement}}" />
+                    <DataGridTextColumn Header="C100" Binding="{Binding C100}"
+                                        Visibility="{Binding DataContext.MainColumnVisibility, 
+                                            Converter={StaticResource MainColumnVisibilityConverter}, 
+                                            ConverterParameter=C100, 
+                                            Source={x:Reference dummyElement}}" />
+                    <DataGridTextColumn Header="C50" Binding="{Binding C50}"
+                                        Visibility="{Binding DataContext.MainColumnVisibility, 
+                                            Converter={StaticResource MainColumnVisibilityConverter}, 
+                                            ConverterParameter=C50, 
+                                            Source={x:Reference dummyElement}}" />
+                    <DataGridTextColumn Header="Miss" Binding="{Binding Miss}"
+                                        Visibility="{Binding DataContext.MainColumnVisibility, 
+                                            Converter={StaticResource MainColumnVisibilityConverter}, 
+                                            ConverterParameter=Miss, 
+                                            Source={x:Reference dummyElement}}" />
+                    <DataGridTextColumn Header="Score" Binding="{Binding TotalScore}" MinWidth="60"
+                                        Visibility="{Binding DataContext.MainColumnVisibility, 
+                                            Converter={StaticResource MainColumnVisibilityConverter}, 
+                                            ConverterParameter=Score, 
+                                            Source={x:Reference dummyElement}}" />
                     <DataGridTemplateColumn Header="Combo" SortMemberPath="MaxCombo"
-                                            CellTemplate="{StaticResource ComboColumnTemplate}" />
-                    <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="Auto" />
+                                            CellTemplate="{StaticResource ComboColumnTemplate}"
+                                            Visibility="{Binding DataContext.MainColumnVisibility, 
+                                                Converter={StaticResource MainColumnVisibilityConverter}, 
+                                                ConverterParameter=Combo, 
+                                                Source={x:Reference dummyElement}}" />
+                    <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="Auto"
+                                        Visibility="{Binding DataContext.MainColumnVisibility, 
+                                            Converter={StaticResource MainColumnVisibilityConverter}, 
+                                            ConverterParameter=Date, 
+                                            Source={x:Reference dummyElement}}" />
+                    <DataGridTextColumn Header="BPM" Binding="{Binding BPM, 
+                                            Converter={StaticResource FloatingPoint2PointPrecisionConverter}}" 
+                                        Width="Auto"
+                                        Visibility="{Binding DataContext.MainColumnVisibility, 
+                                            Converter={StaticResource MainColumnVisibilityConverter}, 
+                                            ConverterParameter=BPM, 
+                                            Source={x:Reference dummyElement}}" />
+                    <DataGridTextColumn Header="AR" Binding="{Binding ApproachRate, Converter={StaticResource FloatingPoint2PointPrecisionConverter}}" Width="Auto"
+                                        Visibility="{Binding DataContext.MainColumnVisibility, 
+                                            Converter={StaticResource MainColumnVisibilityConverter}, 
+                                            ConverterParameter=AR, 
+                                            Source={x:Reference dummyElement}}" />
+                    <DataGridTextColumn Header="OD" Binding="{Binding OverallDifficulty, Converter={StaticResource FloatingPoint2PointPrecisionConverter}}" Width="Auto"
+                                        Visibility="{Binding DataContext.MainColumnVisibility, 
+                                            Converter={StaticResource MainColumnVisibilityConverter}, 
+                                            ConverterParameter=OD, 
+                                            Source={x:Reference dummyElement}}" />
+                    <DataGridTextColumn Header="CS" Binding="{Binding CircleSize, Converter={StaticResource FloatingPoint2PointPrecisionConverter}}" Width="Auto"
+                                        Visibility="{Binding DataContext.MainColumnVisibility, 
+                                            Converter={StaticResource MainColumnVisibilityConverter}, 
+                                            ConverterParameter=CS, 
+                                            Source={x:Reference dummyElement}}" />
+                    <DataGridTextColumn Header="HP" Binding="{Binding HPDrain, Converter={StaticResource FloatingPoint2PointPrecisionConverter}}" Width="Auto"
+                                        Visibility="{Binding DataContext.MainColumnVisibility, 
+                                            Converter={StaticResource MainColumnVisibilityConverter}, 
+                                            ConverterParameter=HP, 
+                                            Source={x:Reference dummyElement}}" />
+                    <DataGridTextColumn Header="Length" Binding="{Binding TotalTime, Converter={StaticResource FloatingPoint2PointPrecisionConverter}}" Width="Auto"
+                                        Visibility="{Binding DataContext.MainColumnVisibility, 
+                                            Converter={StaticResource MainColumnVisibilityConverter}, 
+                                            ConverterParameter=Length, 
+                                            Source={x:Reference dummyElement}}" />
                 </DataGrid.Columns>
             </DataGrid>
             <GridSplitter Grid.Column="1" Width="5"
@@ -109,9 +208,10 @@
                           IsEnabled="False"
                           Visibility="{Binding IsSideScoreInfoVisible, 
                           Converter={StaticResource BooleanToVisibilityConverter}}" />
-            <Grid Grid.Column="2" Visibility="{Binding IsSideScoreInfoVisible, 
+            <Grid Grid.Column="2"
+                  Visibility="{Binding IsSideScoreInfoVisible, 
                           Converter={StaticResource BooleanToVisibilityConverter}}">
-                <scoreinfo:ScoreInfoView x:Name="scoreInfoView"/>
+                <scoreinfo:ScoreInfoView x:Name="scoreInfoView" />
             </Grid>
         </Grid>
     </DockPanel>

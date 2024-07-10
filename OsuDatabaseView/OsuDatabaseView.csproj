@@ -27,4 +27,8 @@
     <ProjectReference Include="..\OsuDatabaseControl\OsuDatabaseControl.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Utils\Enums\" />
+  </ItemGroup>
+
 </Project>

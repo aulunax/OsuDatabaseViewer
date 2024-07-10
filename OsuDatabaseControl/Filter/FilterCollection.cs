@@ -62,5 +62,7 @@ public class FilterCollection
             collection = collection.Where(s => criteria.Combo.IsInRange(s.MaxCombo));
         if (criteria.Bpm.HasFilter)
             collection = collection.Where(s => criteria.Bpm.IsInRange(s.BPM));
+        if (criteria.Accuracy.HasFilter)
+            collection = collection.Where(s => criteria.Accuracy.IsInRange(s.Accuracy*100));
     }
 }

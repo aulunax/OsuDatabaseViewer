@@ -16,9 +16,10 @@
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             <local:FloatingPoint2PointPrecisionConverter x:Key="FloatingPoint2PointPrecisionConverter" />
             <local:ImagePathToBitmapImageConverter x:Key="ImagePathConverter"/>
-            <local:HalfValueConverter x:Key="HalfValueConverter"/>
             <local:BPMMultiValueConverter x:Key="BpmMultiValueConverter" />
             <local:FloatingPointToPercentConverter x:Key="FloatingPointToPercentConverter" />
+            <local:MainColumnVisibilityConverter x:Key="MainColumnVisibilityConverter" />
+            <local:MainColumnBoolConverter x:Key="MainColumnBoolConverter" />
         </ResourceDictionary>
     </Application.Resources>
     

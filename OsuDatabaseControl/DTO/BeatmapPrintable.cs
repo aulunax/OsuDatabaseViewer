@@ -37,7 +37,7 @@ namespace OsuDatabaseControl.DTO
                 case PlayMode.CatchTheBeat:
                     StarRating = beatmap.StarRatingCTB[0].DoubleValue;
                     break;
-                case PlayMode.OsuMania:
+                case PlayMode.Mania:
                     StarRating = beatmap.StarRatingMania[0].DoubleValue;
                     break;
                 default:
