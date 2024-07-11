@@ -1,5 +1,8 @@
 ﻿namespace OsuDatabaseControl.Enums.Display;
 
+/// <summary>
+/// Used to determine which columns are visible in the main view DataGrid.
+/// </summary>
 [Flags]
 public enum MainColumnVisibility
 {
@@ -24,8 +27,8 @@ public enum MainColumnVisibility
     CS = 1 << 18,
     HP = 1 << 19,
     Length = 1 << 20,
+    
     Default = All ^ BPM ^ AR ^ OD ^ CS ^ HP ^ Length,
-
     All = Mode | Artist | Title | Difficulty | Creator | Stars | Mods | Accuracy | C300 | C100 | C50 | Miss | Score |
           Combo | Date | BPM | AR | OD | CS | HP | Length
 }

@@ -5,6 +5,9 @@ using OsuDatabaseControl.Enums.Display;
 
 namespace OsuDatabaseView.Utils.Converters;
 
+/// <summary>
+/// Converts a MainColumnVisibility enum to a boolean based on the parameter string (the mask to check)
+/// </summary>
 public class MainColumnBoolConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -13,7 +16,7 @@ public class MainColumnBoolConverter : IValueConverter
         {
             if (Enum.TryParse<MainColumnVisibility>(visibilityMaskString, out MainColumnVisibility mask))
             {
-                return (visibility & mask) == mask ? true : false;
+                return (visibility & mask) == mask;
             }
         }
         return value;

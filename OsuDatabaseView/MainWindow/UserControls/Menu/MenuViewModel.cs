@@ -80,6 +80,7 @@ namespace OsuDatabaseView.MainWindow.UserControls.Menu
             set
             {
                 ConfigManager.Instance.Config.IsSideScoreInfoShown = value;
+                MainWindowViewModel.IsSideScoreInfoVisible = value;
                 OnPropertyChanged(nameof(SideScoreInfoState));
             }
         }

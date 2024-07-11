@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using CommunityToolkit.Mvvm.Input;
+using OsuDatabaseControl.Enums.Display;
+using OsuDatabaseView.Utils.Converters;
+using Binding = System.Windows.Data.Binding;
 
 namespace OsuDatabaseView.MainWindow.UserControls.Menu
 {
@@ -24,6 +17,7 @@ namespace OsuDatabaseView.MainWindow.UserControls.Menu
         {
             InitializeComponent();
             DataContext = new MenuViewModel();
+            CreateColumnVisibilityMenuItems();
         }
         
         public void SetMainWindowViewModel(MainWindowViewModel mainWindowViewModel)
@@ -31,6 +25,43 @@ namespace OsuDatabaseView.MainWindow.UserControls.Menu
             if (DataContext is MenuViewModel menuViewModel)
             {
                 menuViewModel.MainWindowViewModel = mainWindowViewModel;
+            }
+        }
+
+        /// <summary>
+        /// Creates the menu items for the view->column_visibility item menu based on the MainColumnVisibility enum
+        /// </summary>
+        private void CreateColumnVisibilityMenuItems()
+        {
+            foreach (MainColumnVisibility value in Enum.GetValues(typeof(MainColumnVisibility)))
+            {
+                if (value is MainColumnVisibility.All or MainColumnVisibility.Default) continue;
+
+                if (value is MainColumnVisibility.BPM)
+                {
+                    ColumnVisibilityMenuItem.Items.Add(new Separator());    
+                }
+                
+                var menuItem = new MenuItem
+                {
+                    StaysOpenOnClick = true, 
+                    Header = value.ToString(),
+                    Command = new RelayCommand(() =>
+                    {
+                        if (DataContext is MenuViewModel menuViewModel)
+                        {
+                            menuViewModel.ChangeMainColumnVisibilityStateCommand.Execute(value.ToString());
+                        }
+                    })
+                };
+                Binding binding = new Binding("MainColumnVisibilityState")
+                {
+                    Source = DataContext,
+                    Converter = new MainColumnBoolConverter(),
+                    ConverterParameter = value.ToString()
+                };
+                menuItem.SetBinding(MenuItem.IsCheckedProperty, binding);
+                ColumnVisibilityMenuItem.Items.Add(menuItem);
             }
         }
     }
