@@ -61,28 +61,11 @@ namespace OsuDatabaseControl.DataTypes
         public double LowestBPM { get; set; }
         public double HighestBPM { get; set; }
 
-        public int TotalNumberOfObjects => NumberOfSliders + NumberOfHitCircles + NumberOfSpinners;
+        public int TotalNumberOfObjects { get; set; }
 
-        public double Accuracy
-        {
-            get
-            {
-                switch (PlayMode)
-                {
-                    case PlayMode.Osu:
-                        return (C300 * 300.0 + C100 * 100.0 + C50 * 50.0) / ((C300 + C100 + C50 + Miss) * 300.0);
-                    case PlayMode.Taiko:
-                        return (C300 + C100 * 0.5) / (double)(C300 + C100 + Miss);
-                    case PlayMode.Mania:
-                        return ((C300 + Geki) * 300.0 + Katu * 200.0 + C100 * 100.0 + C50 * 50.0) /
-                                ((C300 + Geki + Katu + C100 + C50 + Miss) * 300.0);
-                    case PlayMode.CatchTheBeat:
-                        return (C300 + C100 + C50) / (double)(C300 + C100 + C50 + Katu + Miss);
-                    default:
-                        return 0;
-                }
-            }
-        }
+        public double Accuracy { get; set; }
+    
+
 
 
         public FullScore(Score score, BeatmapDictionary beatmapDict)
@@ -102,6 +85,7 @@ namespace OsuDatabaseControl.DataTypes
             MaxCombo = score.MaxCombo;
             Perfect = score.Perfect;
             Date = score.Date;
+            Accuracy = score.Accuracy;
 
             SongTitle = beatmap.SongTitle;
             ArtistName = beatmap.ArtistName;
@@ -117,6 +101,7 @@ namespace OsuDatabaseControl.DataTypes
             NumberOfHitCircles = beatmap.NumberOfHitCircles;
             NumberOfSliders = beatmap.NumberOfSliders;
             NumberOfSpinners = beatmap.NumberOfSpinners;
+            TotalNumberOfObjects = beatmap.NumberOfObjects;
 
             if (Mods.HasFlag(Mods.Hr))
             {

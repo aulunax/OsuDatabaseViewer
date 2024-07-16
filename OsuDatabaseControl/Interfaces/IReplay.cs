@@ -1,4 +1,5 @@
 ﻿
+using OsuDatabaseControl.DataTypes.Osu;
 using OsuDatabaseControl.Enums;
 
 namespace OsuDatabaseControl.Interfaces
@@ -19,7 +20,7 @@ namespace OsuDatabaseControl.Interfaces
         int TotalScore { get; set; }
         short MaxCombo { get; set; }
         bool Perfect { get; set; }
-        int Mods { get; set; }
+        Mods Mods { get; set; }
         double AdditionalMods { get; set; }
         string ReplayData { get; set; }
         DateTime Date { get; set; }

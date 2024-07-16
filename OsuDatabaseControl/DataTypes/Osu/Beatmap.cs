@@ -21,6 +21,7 @@ namespace OsuDatabaseControl.DataTypes.Osu
         public short NumberOfHitCircles { get; set; }
         public short NumberOfSliders { get; set; }
         public short NumberOfSpinners { get; set; }
+        public short NumberOfObjects => (short)(NumberOfSliders + NumberOfHitCircles + NumberOfSpinners);
         public long LastModificationTime { get; set; }
         public float ApproachRate { get; set; } // TODO: Byte if the version is less than 20140609, Single otherwise.
         public float CircleSize { get; set; }

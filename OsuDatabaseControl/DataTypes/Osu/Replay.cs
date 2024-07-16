@@ -20,7 +20,7 @@ namespace OsuDatabaseControl.DataTypes.Osu
         public int TotalScore { get; set; }
         public short MaxCombo { get; set; }
         public bool Perfect { get; set; }
-        public int Mods { get; set; }
+        public Mods Mods { get; set; }
         public double AdditionalMods { get; set; }
         public virtual string ReplayData { get; set; }
         public DateTime Date { get; set; }
@@ -28,6 +28,27 @@ namespace OsuDatabaseControl.DataTypes.Osu
         public int CompressedReplayLength { get; set; }
         public byte[] CompressedReplay { get; set; }
         public long OnlineScoreId { get; set; } = -1;
+
+        public double Accuracy
+        {
+            get
+            {
+                switch (PlayMode)
+                {
+                    case PlayMode.Osu:
+                        return (C300 * 300.0 + C100 * 100.0 + C50 * 50.0) / ((C300 + C100 + C50 + Miss) * 300.0);
+                    case PlayMode.Taiko:
+                        return (C300 + C100 * 0.5) / (double)(C300 + C100 + Miss);
+                    case PlayMode.Mania:
+                        return ((C300 + Geki) * 300.0 + Katu * 200.0 + C100 * 100.0 + C50 * 50.0) /
+                               ((C300 + Geki + Katu + C100 + C50 + Miss) * 300.0);
+                    case PlayMode.CatchTheBeat:
+                        return (C300 + C100 + C50) / (double)(C300 + C100 + C50 + Katu + Miss);
+                    default:
+                        return 0;
+                }
+            }
+        }
 
 
         public static IReplay Read(OsuBinaryReader reader, IReplay outobj = null, bool minimalLoad = true, int? version = null)
@@ -48,7 +69,7 @@ namespace OsuDatabaseControl.DataTypes.Osu
             outobj.TotalScore = reader.ReadInt32();
             outobj.MaxCombo = reader.ReadInt16();
             outobj.Perfect = reader.ReadBoolean();
-            outobj.Mods = reader.ReadInt32();
+            outobj.Mods = (Mods)reader.ReadInt32();
             outobj.ReplayData = reader.ReadString();
             outobj.DateTicks = reader.ReadInt64();
             outobj.Date = reader.GetDate(outobj.DateTicks);

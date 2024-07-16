@@ -21,7 +21,7 @@ namespace OsuDatabaseControl.DTO
         public int TotalScore { get; set; }
         public short MaxCombo { get; set; }
         public bool Perfect { get; set; }
-        public int Mods { get; set; }
+        public Mods Mods { get; set; }
         public double AdditionalMods { get; set; }
         public DateTime Date { get; set; }
 

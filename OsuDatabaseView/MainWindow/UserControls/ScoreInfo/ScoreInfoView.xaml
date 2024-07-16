@@ -71,21 +71,21 @@
                 <TextBlock>
                     <Run FontWeight="Bold" Text="CS:" />
                     <Run
-                        Text="{Binding ScoreInfo.CircleSize, Converter={StaticResource FloatingPoint2PointPrecisionConverter}}" />
+                        Text="{Binding ScoreInfo.CircleSize, Converter={StaticResource RoundedFloat}}" />
                     <Run FontWeight="Bold" Text="AR:" />
                     <Run
-                        Text="{Binding ScoreInfo.ApproachRate, Converter={StaticResource FloatingPoint2PointPrecisionConverter}}" />
+                        Text="{Binding ScoreInfo.ApproachRate, Converter={StaticResource RoundedFloat}}" />
                     <Run FontWeight="Bold" Text="OD:" />
                     <Run
-                        Text="{Binding ScoreInfo.OverallDifficulty, Converter={StaticResource FloatingPoint2PointPrecisionConverter}}" />
+                        Text="{Binding ScoreInfo.OverallDifficulty, Converter={StaticResource RoundedFloat}}" />
                     <Run FontWeight="Bold" Text="HP:" />
                     <Run
-                        Text="{Binding ScoreInfo.HPDrain, Converter={StaticResource FloatingPoint2PointPrecisionConverter}}" />
+                        Text="{Binding ScoreInfo.HPDrain, Converter={StaticResource RoundedFloat}}" />
                 </TextBlock>
                 <TextBlock>
                     <Run FontWeight="Bold" Text="Star Rating:" />
                     <Run
-                        Text="{Binding ScoreInfo.StarRating, Converter={StaticResource FloatingPoint2PointPrecisionConverter}}" />
+                        Text="{Binding ScoreInfo.StarRating, Converter={StaticResource RoundedFloat}}" />
                 </TextBlock>
                 <TextBlock>
                     <Run FontWeight="Bold" Text="Circles:" />

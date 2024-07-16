@@ -14,7 +14,7 @@
             <local:LengthTimeToTimeConverter x:Key="LengthTimeToTimeConverter"/>
             <local:ConcatenateConverter x:Key="ConcatenateConverter"/>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-            <local:FloatingPoint2PointPrecisionConverter x:Key="FloatingPoint2PointPrecisionConverter" />
+            <local:FloatingPoint2PointPrecisionConverter x:Key="RoundedFloat" />
             <local:ImagePathToBitmapImageConverter x:Key="ImagePathConverter"/>
             <local:BPMMultiValueConverter x:Key="BpmMultiValueConverter" />
             <local:FloatingPointToPercentConverter x:Key="FloatingPointToPercentConverter" />
