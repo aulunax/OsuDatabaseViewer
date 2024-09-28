@@ -21,6 +21,7 @@
             <local:MainColumnVisibilityConverter x:Key="MainColumnVisibilityConverter" />
             <local:MainColumnBoolConverter x:Key="MainColumnBoolConverter" />
             <local:DateToLocalTimezone x:Key="DateToLocalTimezone" />
+            <local:StringToVisibilityConverter x:Key="StringToVisibilityConverter" />
         </ResourceDictionary>
     </Application.Resources>
     

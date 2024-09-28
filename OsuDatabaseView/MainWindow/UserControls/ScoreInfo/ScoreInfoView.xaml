@@ -122,7 +122,7 @@
                     <Run Text="{Binding ScoreInfo.Mods, Converter={StaticResource ModsToStringConverter}}" />
                 </TextBlock>
                 <Separator Background="#ffffffff" Margin="10" />
-                <TextBlock>
+                <TextBlock Visibility="{Binding ScoreInfo.SongSource, Converter={StaticResource StringToVisibilityConverter}}">
                     <Run FontWeight="Bold" Text="Source:" />
                     <Run Text="{Binding ScoreInfo.SongSource}" />
                 </TextBlock>
