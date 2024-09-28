@@ -47,6 +47,7 @@ namespace OsuDatabaseView.MainWindow
             ShowSelectedBeatmapsetCommand = new RelayCommand<FullScore>(ShowSelectedBeatmapset);
             ShowSelectedBeatmapDifficultyCommand = new RelayCommand<FullScore>(ShowSelectedBeatmapDifficulty);
             OpenBeatmapInNotepadCommand = new RelayCommand<FullScore>(OpenBeatmapInNotepad);
+            OpenBeatmapFolderCommand = new RelayCommand<FullScore>(OpenBeatmapFolder);
             ChangeVisibilityCommand = new RelayCommand<string>(ChangeVisibility);
             
             _debounceTimer = new DispatcherTimer
@@ -64,6 +65,17 @@ namespace OsuDatabaseView.MainWindow
         }
 
 
+        private void OpenBeatmapFolder(FullScore score)
+        {
+            string path = Path.Combine(ConfigManager.Instance.Config.OsuDirectory, "Songs", score.FolderName);
+            try {
+                Process.Start(new ProcessStartInfo(path) { UseShellExecute = true });
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception occurred in OpenBeatmapFolder: {ex.Message}");
+            }
+        }
 
         private void OpenBeatmapInNotepad(FullScore score)
         {
@@ -74,6 +86,7 @@ namespace OsuDatabaseView.MainWindow
         public ICommand ShowSelectedBeatmapsetCommand { get; set; }
         public ICommand ShowSelectedBeatmapDifficultyCommand { get; set; }
         public ICommand OpenBeatmapInNotepadCommand { get; set; }
+        public ICommand OpenBeatmapFolderCommand { get; set; }
 
         
         private void ShowSelectedBeatmapDifficulty(FullScore score)

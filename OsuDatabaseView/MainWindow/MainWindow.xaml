@@ -118,6 +118,10 @@
                                 Command="{Binding DataContext.ShowSelectedBeatmapDifficultyCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"
                                 CommandParameter="{Binding DataContext, RelativeSource={RelativeSource Mode=Self}}"/>
                             <MenuItem
+                                Header="Open beatmap folder"
+                                Command="{Binding DataContext.OpenBeatmapFolderCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"
+                                CommandParameter="{Binding DataContext, RelativeSource={RelativeSource Mode=Self}}"/>
+                            <MenuItem
                                 Header="Open .osu file in notepad"
                                 Command="{Binding DataContext.OpenBeatmapInNotepadCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"
                                 CommandParameter="{Binding DataContext, RelativeSource={RelativeSource Mode=Self}}"/>
