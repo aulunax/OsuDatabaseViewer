@@ -190,11 +190,14 @@ namespace OsuDatabaseView.MainWindow
             SearchBoxQuery = $"id={score.BeatmapSetId}";
         }
 
-        private void LoadData()
+        private async Task LoadData()
         {
             try
             {
-                _originalScores.LoadDataFromFile(ConfigManager.Instance.Config.OsuDirectory);
+                await Task.Run(() =>
+                {
+                    _originalScores.LoadDataFromFile(ConfigManager.Instance.Config.OsuDirectory);
+                });
                 FilteredScores = new ObservableCollection<FullScore>(_originalScores.GetFullScores());
             }
             catch (Exception ex)

@@ -18,6 +18,7 @@ public class FullScores
 
     public void LoadDataFromFile(string osuPath)
     {
+        
         if (!Directory.Exists(osuPath))
         {
             throw new Exception("osu! directory doesnt exist at given path");
