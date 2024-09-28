@@ -64,6 +64,9 @@ namespace OsuDatabaseControl.DataTypes
         public int TotalNumberOfObjects { get; set; }
 
         public double Accuracy { get; set; }
+        
+        public int BeatmapId { get; set; }
+        public int BeatmapSetId { get; set; }
     
 
 
@@ -87,6 +90,8 @@ namespace OsuDatabaseControl.DataTypes
             Date = score.Date;
             Accuracy = score.Accuracy;
 
+            BeatmapId = beatmap.DifficultyID;
+            BeatmapSetId = beatmap.BeatmapID;
             SongTitle = beatmap.SongTitle;
             ArtistName = beatmap.ArtistName;
             ArtistNameUnicode = beatmap.ArtistNameUnicode;

@@ -113,8 +113,19 @@ public class FilterParser
                 case "accuracy":
                 case "acc":
                     return TryUpdateCriteriaRange(ref criteria.Accuracy, op, value);
-
                 
+                case "player":
+                    return TryUpdateCriteriaText(ref criteria.PlayerName, op, value);
+
+                case "id":
+                    return TryUpdateCriteriaRange(ref criteria.BeatmapsetID, op, value, tryParseInt);
+                
+                case "diffid":
+                    return TryUpdateCriteriaRange(ref criteria.BeatmapID, op, value, tryParseInt); 
+                
+                case "hash":
+                    return TryUpdateCriteriaText(ref criteria.MD5Hash, op, value);
+
                 default:
                     return false;
             }

@@ -21,7 +21,14 @@ namespace OsuDatabaseView
             Thread.CurrentThread.CurrentUICulture = customCulture;
             CultureInfo.DefaultThreadCurrentCulture = customCulture;
             CultureInfo.DefaultThreadCurrentUICulture = customCulture;
+            
+            // Add text dictionary
+            ResourceDictionary dict = new ResourceDictionary();
+            dict.Source = new Uri("..\\Resources\\TextResources.xaml", UriKind.Relative);
+            Current.Resources.MergedDictionaries.Clear();
+            Current.Resources.MergedDictionaries.Add(dict);
 
+            
             // Load configuration at startup
             ConfigManager.Instance.Config = ConfigManager.Instance.Config;
 

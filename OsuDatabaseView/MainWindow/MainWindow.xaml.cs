@@ -24,6 +24,7 @@ namespace OsuDatabaseView.MainWindow
         public MainWindow()
         {
             InitializeComponent();
+            MainWindowCommands.InitilizeKeyboardShortcuts();
             
             var mainWindowViewModel = new MainWindowViewModel();
             DataContext = mainWindowViewModel;
@@ -33,7 +34,6 @@ namespace OsuDatabaseView.MainWindow
             _scoreInfoViewModel = new ScoreInfoViewModel();
             scoreInfoView.DataContext = _scoreInfoViewModel;
             mainWindowViewModel.SelectionChangedCommand = new RelayCommand<FullScore>(UpdateScoreInfoViewModel);
-
         }
         
         private void UpdateScoreInfoViewModel(FullScore selectedScoreInfo)
@@ -41,5 +41,9 @@ namespace OsuDatabaseView.MainWindow
             _scoreInfoViewModel.ScoreInfo = selectedScoreInfo;
         }
 
+        private void FocusSearchBoxExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            SearchBox.Focus();
+        }
     }
 }

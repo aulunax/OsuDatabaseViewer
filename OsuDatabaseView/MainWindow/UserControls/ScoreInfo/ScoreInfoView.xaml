@@ -100,7 +100,7 @@
                     <Run Text="Played by" />
                     <Run FontWeight="Bold" Text="{Binding ScoreInfo.PlayerName}" />
                     <Run Text="on" />
-                    <Run Text="{Binding ScoreInfo.Date}" />
+                    <Run Text="{Binding ScoreInfo.Date, Converter={StaticResource DateToLocalTimezone}}" />
                 </TextBlock>
                 <TextBlock>
                     <Run FontWeight="Bold" Text="300:" />

@@ -10,10 +10,19 @@
   <ItemGroup>
     <None Remove="osu!.db" />
     <None Remove="scores.db" />
+    <None Remove="Difficulty\**" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\OsuFormatReader\OsuFormatReader.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Difficulty\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Difficulty\**" />
   </ItemGroup>
 
 </Project>

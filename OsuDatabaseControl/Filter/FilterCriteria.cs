@@ -36,6 +36,12 @@ public class FilterCriteria
     public OptionalRange<int> TotalScore;
     public OptionalRange<double> Bpm;
     public OptionalRange<double> Accuracy;
+    public OptionalTextFilter PlayerName;
+    public OptionalTextFilter MD5Hash;
+
+    public OptionalRange<int> BeatmapID;
+    public OptionalRange<int> BeatmapsetID;
+
 
 
     

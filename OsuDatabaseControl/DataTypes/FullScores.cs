@@ -30,7 +30,7 @@ public class FullScores
 
         ConfigManager.Instance.Config.Username = osuDBInfo.PlayerName;
         
-        IEnumerable<Score> playerScores = scores.GetScores().Where(sc => sc.PlayerName == osuDBInfo.PlayerName);
+        IEnumerable<Score> playerScores = scores.GetScores();
         fullScores.Capacity = playerScores.Count();
         
         foreach (Score sc in playerScores)

@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using OsuDatabaseView.Utils.Converters;
 using Binding = System.Windows.Data.Binding;
@@ -40,6 +41,7 @@ internal class ScoreDataGridColumn : DataGridTextColumn
     }
     private void BindingVisibility()
     {
+        if (_sourceParameter is null && _visibilityParameter is null) return;
         var binding = new Binding("DataContext.MainColumnVisibility")
         {
             Converter = new MainColumnVisibilityConverter(),

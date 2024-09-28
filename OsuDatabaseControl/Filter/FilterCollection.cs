@@ -13,7 +13,9 @@ public class FilterCollection
                 term.Matches(s.SongTitle) || 
                 term.Matches(s.CreatorName) || 
                 term.Matches(s.DifficultyName) ||
-                term.Matches(s.SongTags)
+                term.Matches(s.SongTags) ||
+                term.Matches(s.BeatmapId.ToString()) ||
+                term.Matches(s.BeatmapSetId.ToString())
                 );
         }
         
@@ -64,5 +66,13 @@ public class FilterCollection
             collection = collection.Where(s => criteria.Bpm.IsInRange(s.BPM));
         if (criteria.Accuracy.HasFilter)
             collection = collection.Where(s => criteria.Accuracy.IsInRange(s.Accuracy*100));
+        if (criteria.PlayerName.HasFilter)
+            collection = collection.Where(s => criteria.PlayerName.Matches(s.PlayerName));
+        if (criteria.BeatmapID.HasFilter)
+            collection = collection.Where(s => criteria.BeatmapID.IsInRange(s.BeatmapId));
+        if (criteria.BeatmapsetID.HasFilter)
+            collection = collection.Where(s => criteria.BeatmapsetID.IsInRange(s.BeatmapSetId));        
+        if (criteria.MD5Hash.HasFilter)
+            collection = collection.Where(s => criteria.MD5Hash.Matches(s.MD5Hash));
     }
 }

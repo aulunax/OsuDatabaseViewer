@@ -20,6 +20,7 @@
             <local:FloatingPointToPercentConverter x:Key="FloatingPointToPercentConverter" />
             <local:MainColumnVisibilityConverter x:Key="MainColumnVisibilityConverter" />
             <local:MainColumnBoolConverter x:Key="MainColumnBoolConverter" />
+            <local:DateToLocalTimezone x:Key="DateToLocalTimezone" />
         </ResourceDictionary>
     </Application.Resources>
     
