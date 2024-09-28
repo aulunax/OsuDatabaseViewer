@@ -74,10 +74,14 @@
                         Text="{Binding ScoreInfo.CircleSize, Converter={StaticResource RoundedFloat}}" />
                     <Run FontWeight="Bold" Text="AR:" />
                     <Run
-                        Text="{Binding ScoreInfo.ApproachRate, Converter={StaticResource RoundedFloat}}" />
+                        Text="{Binding ScoreInfo.ApproachRate, Converter={StaticResource RoundedFloat}}" 
+                        ToolTip="{Binding ScoreInfo.ApproachRate, Converter={StaticResource ARtoTimeConverter}}"
+                        ToolTipService.InitialShowDelay="300"/>
                     <Run FontWeight="Bold" Text="OD:" />
                     <Run
-                        Text="{Binding ScoreInfo.OverallDifficulty, Converter={StaticResource RoundedFloat}}" />
+                        Text="{Binding ScoreInfo.OverallDifficulty, Converter={StaticResource RoundedFloat}}" 
+                        ToolTip="{Binding ScoreInfo.OverallDifficulty, Converter={StaticResource ODtoHitWindowConverter}}"
+                        ToolTipService.InitialShowDelay="300"/>
                     <Run FontWeight="Bold" Text="HP:" />
                     <Run
                         Text="{Binding ScoreInfo.HPDrain, Converter={StaticResource RoundedFloat}}" />

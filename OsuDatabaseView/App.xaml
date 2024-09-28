@@ -22,6 +22,8 @@
             <local:MainColumnBoolConverter x:Key="MainColumnBoolConverter" />
             <local:DateToLocalTimezone x:Key="DateToLocalTimezone" />
             <local:StringToVisibilityConverter x:Key="StringToVisibilityConverter" />
+            <local:ARtoTimeConverter x:Key="ARtoTimeConverter" />
+            <local:ODtoHitWindowConverter x:Key="ODtoHitWindowConverter" />
         </ResourceDictionary>
     </Application.Resources>
     
