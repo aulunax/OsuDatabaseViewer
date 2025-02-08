@@ -38,6 +38,19 @@ namespace OsuDatabaseControl.IO.Readers
 
             return new IntDoublePair(IntValue, DoubleValue);
         }
+        
+        public IntFloatPair ReadIntFloatPair()
+        {
+            byte IntByte = base.ReadByte();
+            int IntValue = base.ReadInt32();
+            byte FloatByte = base.ReadByte();
+            float FloatValue = base.ReadSingle();
+
+            if (IntByte != 0x08 || FloatByte != 0x0c)
+                throw new Exception("Invalid db format when reading IntFloatPair.");
+
+            return new IntFloatPair(IntValue, FloatValue);
+        }
 
         public TimingPoint ReadTimingPoint()
         {

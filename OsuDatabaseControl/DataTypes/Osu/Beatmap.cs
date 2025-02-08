@@ -23,12 +23,12 @@ namespace OsuDatabaseControl.DataTypes.Osu
         public short NumberOfSpinners { get; set; }
         public short NumberOfObjects => (short)(NumberOfSliders + NumberOfHitCircles + NumberOfSpinners);
         public long LastModificationTime { get; set; }
-        public float ApproachRate { get; set; } // TODO: Byte if the version is less than 20140609, Single otherwise.
+        public float ApproachRate { get; set; }
         public float CircleSize { get; set; }
         public float HPDrain { get; set; }
         public float OverallDifficulty { get; set; }
         public double SliderVelocity { get; set; }
-        public IntDoublePair[] StarRatingStandard { get; set; } // TODO: An Int indicating the number of following Int-Double pairs, then the aforementioned pairs. Star Rating info for osu! standard, in each pair, the Int is the mod combination, and the Double is the Star Rating. Only present if version is greater than or equal to 20140609.
+        public IntDoublePair[] StarRatingStandard { get; set; } 
         public IntDoublePair[] StarRatingTaiko { get; set; }
         public IntDoublePair[] StarRatingCTB { get; set; }
         public IntDoublePair[] StarRatingMania { get; set; }
@@ -107,7 +107,40 @@ namespace OsuDatabaseControl.DataTypes.Osu
 
             outobj.SliderVelocity = reader.ReadDouble();
 
-            if (version >= 20140609)
+            
+            if (version >= 20250101)
+            {
+                int NumberOfStarRatingStandard = reader.ReadInt32();
+                IntFloatPair temp;
+                outobj.StarRatingStandard = new IntDoublePair[NumberOfStarRatingStandard];
+                for (int i = 0; i < NumberOfStarRatingStandard; i++)
+                {
+                    temp = reader.ReadIntFloatPair();
+                    outobj.StarRatingStandard[i] = new IntDoublePair(temp.IntValue, temp.FloatValue);
+                }
+                int NumberOfStarRatingTaiko = reader.ReadInt32();
+                outobj.StarRatingTaiko = new IntDoublePair[NumberOfStarRatingTaiko];
+                for (int i = 0; i < NumberOfStarRatingTaiko; i++)
+                {
+                    temp = reader.ReadIntFloatPair();
+                    outobj.StarRatingTaiko[i] = new IntDoublePair(temp.IntValue, temp.FloatValue);
+                }
+                int NumberOfStarRatingCTB = reader.ReadInt32();
+                outobj.StarRatingCTB = new IntDoublePair[NumberOfStarRatingCTB];
+                for (int i = 0; i < NumberOfStarRatingCTB; i++)
+                {
+                    temp = reader.ReadIntFloatPair();
+                    outobj.StarRatingCTB[i] = new IntDoublePair(temp.IntValue, temp.FloatValue);
+                }
+                int NumberOfStarRatingMania = reader.ReadInt32();
+                outobj.StarRatingMania = new IntDoublePair[NumberOfStarRatingMania];
+                for (int i = 0; i < NumberOfStarRatingMania; i++)
+                {
+                    temp = reader.ReadIntFloatPair();
+                    outobj.StarRatingMania[i] = new IntDoublePair(temp.IntValue, temp.FloatValue);
+                }
+            }
+            else if (version >= 20140609)
             {
                 int NumberOfStarRatingStandard = reader.ReadInt32();
                 outobj.StarRatingStandard = new IntDoublePair[NumberOfStarRatingStandard];
@@ -134,6 +167,7 @@ namespace OsuDatabaseControl.DataTypes.Osu
                     outobj.StarRatingMania[i] = reader.ReadIntDoublePair();
                 }
             }
+            
 
             outobj.DrainTime = reader.ReadInt32();
             outobj.TotalTime = reader.ReadInt32();
