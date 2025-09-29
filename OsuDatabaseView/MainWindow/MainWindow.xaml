@@ -125,6 +125,10 @@
                                 Header="Open .osu file in notepad"
                                 Command="{Binding DataContext.OpenBeatmapInNotepadCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"
                                 CommandParameter="{Binding DataContext, RelativeSource={RelativeSource Mode=Self}}"/>
+                            <MenuItem
+                                Header="Open beatmap info web page"
+                                Command="{Binding DataContext.OpenBeatmapInWebCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"
+                                CommandParameter="{Binding DataContext, RelativeSource={RelativeSource Mode=Self}}"/>
                         </ContextMenu.Items>
                     </ContextMenu>
                     <ContextMenu x:Key="DataGridColumnContextMenu">

@@ -49,7 +49,8 @@ namespace OsuDatabaseView.MainWindow
             OpenBeatmapInNotepadCommand = new RelayCommand<FullScore>(OpenBeatmapInNotepad);
             OpenBeatmapFolderCommand = new RelayCommand<FullScore>(OpenBeatmapFolder);
             ChangeVisibilityCommand = new RelayCommand<string>(ChangeVisibility);
-            
+            OpenBeatmapInWebCommand = new RelayCommand<FullScore>(OpenBeatmapInWeb);
+
             _debounceTimer = new DispatcherTimer
             {
                 Interval = TimeSpan.FromMilliseconds(200)
@@ -83,10 +84,23 @@ namespace OsuDatabaseView.MainWindow
             Process.Start("notepad.exe", path);
         }
 
+        private void OpenBeatmapInWeb(FullScore score)
+        {
+            // TODO: add other playmodes to url, not just std
+            string url = $"https://osu.ppy.sh/beatmapsets/{score.BeatmapSetId}#osu/{score.BeatmapId}";
+            var psi = new ProcessStartInfo
+            {
+                FileName = url,
+                UseShellExecute = true
+            };
+            Process.Start(psi);
+        }
+
         public ICommand ShowSelectedBeatmapsetCommand { get; set; }
         public ICommand ShowSelectedBeatmapDifficultyCommand { get; set; }
         public ICommand OpenBeatmapInNotepadCommand { get; set; }
         public ICommand OpenBeatmapFolderCommand { get; set; }
+        public ICommand OpenBeatmapInWebCommand { get; set; }
 
         
         private void ShowSelectedBeatmapDifficulty(FullScore score)
